@@ -39,6 +39,7 @@ This is the laravel server for the incharge application that helps people take c
 * [FACILITY LISTING](https://docs.google.com/spreadsheets/d/1ucV7H_rGMWb0d-6VAQwLV9a50nby_tr-L1nxCkyKb58/edit?usp=sharing).
 * [FAQs](https://drive.google.com/file/d/1uxQQ6fGIttdNRWokWq_zqdwxdVzeMskj/view?usp=sharing).
 * [DEVELOPER CONTRACT](https://drive.google.com/file/d/1IaO_tUqn3axQyX7MjNyc5KQl4ztizS4L/view?usp=sharing).
+* [DATABASE ARCHITECTURE](https://www.figma.com/file/Zlmg3YeOZV1asX4vvsKQcqZ8/Untitled?node-id=9%3A18).
 
 
 ## 📄 License
