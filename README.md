@@ -32,6 +32,15 @@ This is the laravel server for the incharge application that helps people take c
 * run `react-native run-ios` or for android `react-native run-android`
 * configure `API_URL` in your `.env` file
 
+
+## Documentation
+* [APPLICATION GUIDLINES](https://docs.google.com/document/d/1dZsHJ_kM9Qaj1CsTEOg9bnoxnpOz5654wY-1M7ojjkM/edit?usp=sharing).
+* [CONTRACEPTIVE ALGORITHM](https://drive.google.com/file/d/16WDH5mwWPFKIDCxqQSrosKjaVA6iGauC/view?usp=sharing).
+* [FACILITY LISTING](https://docs.google.com/spreadsheets/d/1ucV7H_rGMWb0d-6VAQwLV9a50nby_tr-L1nxCkyKb58/edit?usp=sharing).
+* [FAQs](https://drive.google.com/file/d/1uxQQ6fGIttdNRWokWq_zqdwxdVzeMskj/view?usp=sharing).
+* [DEVELOPER CONTRACT](https://drive.google.com/file/d/1IaO_tUqn3axQyX7MjNyc5KQl4ztizS4L/view?usp=sharing).
+
+
 ## 📄 License
 
 React Native is MIT licensed, as found in the [LICENSE][l] file.
