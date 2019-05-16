@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\JwtSubjectable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
+use App\Notifications\User\ResetPassword;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,8 +14,11 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
 
     use Notifiable;
+
     use SoftDeletes;
+
     use JwtSubjectable;
+
 
     /**
      * The attributes that are mass assignable.
@@ -35,9 +39,8 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
      *
      * @var array
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    protected $casts = [ 'email_verified_at' => 'datetime' ];
+
 
     /**
      * the profile created for this user
@@ -48,4 +51,14 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         return $this->hasOne(Profile::class);
     }
 
+    /**
+     * Send the password reset email.g
+     * 
+     * @param string $token
+     * @return [type]        [description]
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token));
+    }
 }
