@@ -129,7 +129,7 @@ class ResetPasswordController extends Controller
 
 		event(new PasswordReset($user));
 
-		return $this->guard()->login($user);
+		$this->guard()->login($user);
 	}
 
 }
