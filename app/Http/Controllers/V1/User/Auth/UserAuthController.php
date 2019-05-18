@@ -89,6 +89,8 @@ class UserAuthController extends Controller
 			return response()->json([
 				'status'	=>	false,
 				'message'	=>	'Failed to create the user account.',
+				'error'		=>	app()->environment('production') ?: $e->getMessage(),
+				'trace'		=>	app()->environment('production') ?: $e->getTrace(),
 			], 500);
 		}
 
@@ -135,6 +137,8 @@ class UserAuthController extends Controller
 			return response()->json([
 				'status'	=>	false,
 				'message'	=>	'Failed to logout the user',
+				'error'		=>	app()->environment('production') ?: $e->getMessage(),
+				'trace'		=>	app()->environment('production') ?: $e->getTrace(),
 			], 500);
 		}
 

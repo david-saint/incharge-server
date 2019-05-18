@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\V1\User\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\VerifiesEmails;
@@ -25,7 +25,7 @@ class VerificationController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '';
 
     /**
      * Create a new controller instance.
@@ -34,8 +34,32 @@ class VerificationController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
         $this->middleware('signed')->only('verify');
+        $this->middleware('force:users')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
+    }
+
+    /**
+     * Response to send when email is successfully
+     * verified.
+     * 
+     * @return [type] [description]
+     */
+    public function success()
+    {
+        return response()->json([
+            'message'   =>  'Your email has been verified successfully. 🎉🎊🥳',
+        ], 200);
+    }
+
+    /**
+     * The route to redirect to upun
+     * successful verify.
+     * 
+     * @return [type] [description]
+     */
+    protected function redirectTo()
+    {
+        return route('v1::user.verification.success');
     }
 }

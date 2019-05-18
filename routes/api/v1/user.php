@@ -15,10 +15,16 @@
 Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
 	Route::post('login', 'Auth\UserAuthController@login')->name('auth.login');
     Route::post('logout', 'Auth\UserAuthController@logout')->name('auth.logout');
+
     Route::post('register','Auth\UserAuthController@register');
     Route::get('refresh','Auth\UserAuthController@refresh');
+
     Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
     Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.reset');
+
+    Route::get('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
+    Route::get('email/success', 'Auth\VerificationController@success')->name('verification.success');
+    Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
 
     Route::group([ 'middleware' => [ 'user', 'auth' ] ], function () {
 
