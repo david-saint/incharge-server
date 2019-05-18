@@ -38,6 +38,7 @@ class GenerateCountries extends Command
     public function __construct()
     {
         parent::__construct();
+        
         Model::unguard();
     }
 
