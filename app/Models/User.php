@@ -8,16 +8,13 @@ use Illuminate\Notifications\Notifiable;
 use App\Notifications\User\ResetPassword;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Traits\MustVerifyEmail as MustVerifyEmailTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
 
-    use Notifiable;
-
-    use SoftDeletes;
-
-    use JwtSubjectable;
+    use Notifiable, SoftDeletes, JwtSubjectable, MustVerifyEmailTrait;
 
 
     /**
@@ -40,6 +37,14 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
      * @var array
      */
     protected $casts = [ 'email_verified_at' => 'datetime' ];
+
+    /**
+     * The name of the route that handles
+     * this models email verification.
+     * 
+     * @var string
+     */
+    protected $verificationRoute = 'v1::user.verification.verify';
 
 
     /**

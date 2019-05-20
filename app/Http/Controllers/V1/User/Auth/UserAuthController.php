@@ -6,11 +6,22 @@ use Auth;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
-use App\Http\Controllers\V1\Controller;
+use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class UserAuthController extends Controller
 {
+
+	/*
+    |--------------------------------------------------------------------------
+    | User Authentication Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller is responsible for handling authentication of any
+    | user that wants to register or login or refresh its state. Emails may also
+    | be re-sent if the user didn't receive the original email message.
+    |
+    */
 
 	use AuthenticatesUsers;
 
@@ -89,6 +100,8 @@ class UserAuthController extends Controller
 			return response()->json([
 				'status'	=>	false,
 				'message'	=>	'Failed to create the user account.',
+				'error'		=>	app()->environment('production') ?: $e->getMessage(),
+				'trace'		=>	app()->environment('production') ?: $e->getTrace(),
 			], 500);
 		}
 
@@ -135,6 +148,8 @@ class UserAuthController extends Controller
 			return response()->json([
 				'status'	=>	false,
 				'message'	=>	'Failed to logout the user',
+				'error'		=>	app()->environment('production') ?: $e->getMessage(),
+				'trace'		=>	app()->environment('production') ?: $e->getTrace(),
 			], 500);
 		}
 
