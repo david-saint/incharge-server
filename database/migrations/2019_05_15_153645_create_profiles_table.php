@@ -17,10 +17,11 @@ class CreateProfilesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id')->unsigned();
             $table->integer('age')->unsigned();
-            $table->enum('gender', ['male', 'female', 'other']);
+            $table->enum('gender', ['MALE', 'FEMALE', 'OTHER']);
+            $table->dateTime('date_of_birth');
             $table->text('address');
-            $table->decimal('latitude', 10, 7);
-            $table->decimal('longitude', 10, 7);
+            $table->decimal('latitude', 10, 7)->nullable();
+            $table->decimal('longitude', 10, 7)->nullable();
             $table->enum('marital_status', ['SINGLE', 'RELATIONSHIP']);
             $table->integer('height')->unsigned()->nullable()->comment('The height of the user in centimeters');
             $table->decimal('weight')->nullable()->comment('The weight of the user in KG');
