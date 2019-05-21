@@ -6,7 +6,7 @@ trait HandlesAuthenticatedUser
 {
 
 	/**
-	 * Returns the currently authenticated user
+	 * Returns the currently authenticated user.
 	 * 
 	 * @param  string $guard [description]
 	 * @return [type]        [description]
