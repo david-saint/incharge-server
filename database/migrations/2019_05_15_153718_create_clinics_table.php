@@ -17,8 +17,8 @@ class CreateClinicsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->text('address');
-            $table->decimal('latitude', 10, 7);
-            $table->decimal('longitude', 10, 7);
+            $table->decimal('latitude', 10, 7)->nullable();
+            $table->decimal('longitude', 10, 7)->nullable();
             $table->integer('added_by_id')->unsigned();
             $table->softDeletes();
             $table->timestamps();
