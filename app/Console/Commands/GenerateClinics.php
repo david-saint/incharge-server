@@ -4,8 +4,12 @@ namespace App\Console\Commands;
 
 use App\Models\Clinic;
 use App\Models\Location;
+use App\Models\Locatable;
 use App\Helpers\CSVImporter;
 use Illuminate\Console\Command;
+use GuzzleHttp\Client as Guzzle;
+use GuzzleHttp\Exception\GuzzleException;
+use App\Console\Commands\Exceptions\InvalidResponseException;
 
 class GenerateClinics extends Command
 {
@@ -14,7 +18,7 @@ class GenerateClinics extends Command
      *
      * @var string
      */
-    protected $signature = 'generate:clinics';
+    protected $signature = 'generate:clinics {--key=AIzaSyDSKsq6R1oOIuorMPaRtNGTCYkt8HzgpSs}';
 
     /**
      * The console command description.
@@ -32,6 +36,14 @@ class GenerateClinics extends Command
     protected $importer;
 
     /**
+     * The Client that would handle the http request
+     * to retrieve the longitude and latitude.
+     * 
+     * @var null
+     */
+    protected $client = null;
+
+    /**
      * Create a new command instance.
      *
      * @return void
@@ -40,7 +52,17 @@ class GenerateClinics extends Command
     {
         parent::__construct();
 
+        // Initialize the CSV importer.
         $this->importer = new CSVImporter(storage_path('app/application/clinics.csv'), true);
+
+        // Initialize the guzzle client.
+        $this->client = new Guzzle([ 'base_uri' => 'https://maps.googleapis.com/maps/api/' ]);
+
+        // truncate the clinics table
+        Clinic::truncate();
+
+        // truncate the locatables table
+        Locatable::truncate();
     }
 
     /**
@@ -64,26 +86,57 @@ class GenerateClinics extends Command
                 $location = Location::where('state_id', 20)->whereRaw("UPPER(`name`) LIKE '%". strtoupper($clinic['lga']) . "%'")->first();
 
                 if ($location) {
-                    $clinic = Clinic::create([
+                    $c = Clinic::create([
                         'added_by_id'   =>  1,
                         'name'          =>  $clinic['name'],
                         'address'       =>  "$location->name, {$location->state->name}"
                     ]);
 
-                    $location->clinics()->save($clinic);
+                    $location->clinics()->save($c);
 
                     $successful += 1;
 
                 } else {
-                    $clinic = Clinic::create([
+                    $c = Clinic::create([
                         'added_by_id'   =>  1,
                         'name'          =>  $clinic['name'],
                         'address'       =>  "{$clinic['lga']}, Oyo State",
                     ]);
                 }
 
-                $this->comment(PHP_EOL . 'ADDED CLINIC NAMED ' . $clinic['name'] . ' LOCATED AT ' . $clinic['lga'] . PHP_EOL);
-                
+                $this->comment(PHP_EOL . 'ADDED CLINIC NAMED ' . $clinic['name'] . ' LOCATED AT ' . $clinic['lga'] .  ';' . PHP_EOL);
+
+                $l = "{$c->name}, {$c->address}";
+
+                // Get the longitude and latitude for the specific clinic
+                $response = $this->client->request(
+                    'GET',
+                    'geocode/json',
+                    [
+                        'query' =>  [
+                            'key'       =>  $this->option('key'),
+                            'address'   =>  $l,
+                        ]
+                    ]
+                );
+
+                $googleLocation = json_decode($response->getBody());
+
+                if (! isset($googleLocation->results[0]->geometry->location))
+                    throw new InvalidResponseException('The reponse doesn\'t have geometry location');
+
+                $googleLocation = $googleLocation->results[0]->geometry->location;
+
+                $c->longitude = $googleLocation->lng;
+
+                $c->latitude = $googleLocation->lat;
+
+                $c->save();
+
+            }
+            catch (GuzzleException $e)
+            {
+                $this->error(PHP_EOL . 'Failed to get the longitude and latitude for "' .  $clinic . '" because -> "' . $e->getMessage() .'"' . PHP_EOL);
             }
             catch (\Exception $e)
             {
@@ -91,7 +144,6 @@ class GenerateClinics extends Command
             }
 
             $bar->advance();
-
         }
 
         $bar->finish();
