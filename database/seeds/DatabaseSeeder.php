@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
         $this->call(GeneratedLocationsTableSeeder::class);
         $this->call(GeneratedClinicsTableSeeder::class);
         $this->call(GeneratedLocatablesTableSeeder::class);
+        $this->call(ContraceptionReasonsTableSeeder::class);
     }
 }
