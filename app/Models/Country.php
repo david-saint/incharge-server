@@ -10,21 +10,31 @@ class Country extends Model
 
 	use SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [ 'name', 'code' ];
+	/**
+	 * The attributes that are mass assignable.
+	 *
+	 * @var array
+	 */
+	protected $fillable = [ 'name', 'code' ];
 
 
-    /**
-     * The states in this country.
-     * 
-     * @return [type] [description]
-     */
-    public function states()
-    {
-    	return $this->hasMany(State::class);
-    }
+	/**
+	 * The states in this country.
+	 * 
+	 * @return [type] [description]
+	 */
+	public function states()
+	{
+		return $this->hasMany(State::class);
+	}
+
+	/**
+	 * The locations in this state.
+	 * 
+	 * @return [type] [description]
+	 */
+	public function locations()
+	{
+		return $this->hasMany(Location::class);
+	}
 }

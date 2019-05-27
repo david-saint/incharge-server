@@ -13,8 +13,10 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
+        Commands\GenerateClinics::class,
         Commands\GenerateCountries::class,
         Commands\GenerateStatesAndLGA::class,
+        Commands\GetLocationLongitudeLatitude::class,
     ];
 
     /**

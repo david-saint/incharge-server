@@ -38,4 +38,15 @@ class Location extends Model
     {
     	return $this->belongsTo(Country::class);
     }
+
+    /**
+     * Gets all the clinics that are in a specific 
+     * location.
+     * 
+     * @return [type] [description]
+     */
+    public function clinics()
+    {
+        return $this->morphedByMany(Clinic::class, 'locatable');
+    }
 }

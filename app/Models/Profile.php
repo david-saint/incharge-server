@@ -19,7 +19,7 @@ class Profile extends Model
      *
      * @var array
      */
-    protected $hidden = [ ];
+    protected $hidden = [];
 
     /**
      * The attributes that should be mutated to dates.
@@ -45,4 +45,24 @@ class Profile extends Model
    	{
    		return $this->belongsTo(User::class);
    	}
+
+    /**
+     * Get the contraceptive reason.
+     * 
+     * @return [type] [description]
+     */
+    public function reason()
+    {
+        return $this->belongsTo(ContraceptionReason::class, 'contraception_reason_id');
+    }
+
+    /**
+     * The education level of the profile.
+     * 
+     * @return [type] [description]
+     */
+    public function educationLevel()
+    {
+        return $this->belongsTo(EducationLevel::class);
+    }
 }

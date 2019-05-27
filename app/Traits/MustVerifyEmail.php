@@ -10,7 +10,7 @@ trait MustVerifyEmail
     /**
      * Send the email verification notification.
      *
-     * @return void
+     * @return voids
      */
     public function sendEmailVerificationNotification()
     {

@@ -5,8 +5,9 @@ namespace App\Http\Controllers\V1\User\Auth;
 use Auth;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Auth\Events\Registered;
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\Events\Registered;
+use App\Http\Resources\Users\UserResource;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class UserAuthController extends Controller
@@ -108,6 +109,7 @@ class UserAuthController extends Controller
 		return response()->json([
 			'status'	=>	true,
 			'message'	=>	'User Account Created',
+			'data'		=>	new UserResource($user),
 		], 200);
 	}
 
