@@ -18,8 +18,6 @@ class ContraceptionReasonResource extends JsonResource
         return [
             'id' => $this->id,
             'value' => $this->value,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
             'profiles' => $this->whenLoaded('profiles', function () {
                 return ProfileResource::collection($this->profiles);
             })

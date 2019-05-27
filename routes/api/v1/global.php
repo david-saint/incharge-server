@@ -12,7 +12,8 @@
 */
 
 Route::group(['namespace' => 'General', 'as' => 'global.'], function () {
-	Route::get('/', function () {
-		return 'Hello, World!';
-	});
+	Route::get('/', function () { return 'Hello, World!'; });
+
+	Route::get('contraception-reasons', 'ContraceptionReasonContoroller@index');
+	Route::get('contraception-reasons/{reason}', 'ContraceptionReasonContoroller@show');
 });
