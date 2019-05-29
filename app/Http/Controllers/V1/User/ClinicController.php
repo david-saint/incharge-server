@@ -53,7 +53,6 @@ class ClinicController extends SearchableController
     				->setAllowedRelationships($this->allowedRelationships)
                     ->queryAll($request);
 
-        info($query->toSql());
         return ClinicResource::collection($request->hasAny(['page', 'per_page']) ?
         	$query->paginate($request->per_page ?? 20) :
         	$query->get()
