@@ -95,6 +95,12 @@ class ClinicRepository extends QueryableRepository implements ClinicRepositoryIn
                 $order = $col[1];
 
                 switch ($column) {
+                	case 'distance':
+                		if ($request->filled(['longitude', 'latitude'])) {
+                			$query->orderBy($column, $order);
+                		}
+                		break;
+
                     default:
                         $query->orderBy($column, $order);
                         break;
