@@ -17,6 +17,11 @@ class RepositoryServiceProvider extends ServiceProvider
             \App\Repositories\Contracts\RequestRelationshipParserInterface::class,
             \App\Repositories\Concrete\RequestRelationshipParser::class
         );
+
+        $this->app->bind(
+            \App\Repositories\Contracts\ClinicRepositoryInterface::class,
+            \App\Repositories\Concrete\ClinicRepository::class
+        );
     }
 
     /**

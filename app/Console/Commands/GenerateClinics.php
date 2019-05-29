@@ -18,7 +18,7 @@ class GenerateClinics extends Command
      *
      * @var string
      */
-    protected $signature = 'generate:clinics {--key=AIzaSyDSKsq6R1oOIuorMPaRtNGTCYkt8HzgpSs}';
+    protected $signature = 'generate:clinics {--key=AIzaSyBhATtULNd9DLRc9hbKELEO2HpMG6gC7o0}';
 
     /**
      * The console command description.
@@ -141,6 +141,7 @@ class GenerateClinics extends Command
             catch (\Exception $e)
             {
                 $this->error(PHP_EOL . 'Failed to include clinic ' . $clinic['name'] . ' because ' . $e->getMessage() . PHP_EOL);
+                $this->comment($response->getBody());
             }
 
             $bar->advance();
