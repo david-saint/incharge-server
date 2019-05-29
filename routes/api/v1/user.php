@@ -27,8 +27,18 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
     Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
 
     Route::group([ 'middleware' => [ 'user', 'auth' ] ], function () {
+        Route::get('', 'Auth\UserAuthController@user')->name('get');
 
-        Route::get('', 'Auth\UserAuthController@user');
-
+        Route::group(['prefix' => 'clinics', 'as' => 'clinics.'], function () {
+            
+            /*
+             |----------------------------------------------------------------------------
+             | Clinic Requests.
+             |----------------------------------------------------------------------------
+             |
+             | This are the routes handling clinic related requests.
+            */
+            Route::get('', 'ClinicController@index')->name('index');
+        });
     });
 });
