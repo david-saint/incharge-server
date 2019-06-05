@@ -82,6 +82,9 @@ class UserAuthController extends Controller
 			'email'		=>	'required|email|unique:users',
 			'phone'		=>	'required|phone:NG|unique:users',
 			'password'	=>	'required|min:6',
+		],[
+			'email.unique'	=>	'has already been taken',
+			'phone.unique'	=>	'has already been taken',
 		]);
 
 		try
@@ -131,7 +134,7 @@ class UserAuthController extends Controller
 	public function user()
 	{
 		// return a resource in future.
-		return response()->json($this->guard()->user());
+		return new UserResource($this->guard()->user());
 	}
 
 	/**
