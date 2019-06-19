@@ -57,12 +57,6 @@ class GenerateClinics extends Command
 
         // Initialize the guzzle client.
         $this->client = new Guzzle([ 'base_uri' => 'https://maps.googleapis.com/maps/api/' ]);
-
-        // truncate the clinics table
-        Clinic::truncate();
-
-        // truncate the locatables table
-        Locatable::truncate();
     }
 
     /**

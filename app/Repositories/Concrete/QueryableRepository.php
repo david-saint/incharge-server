@@ -55,6 +55,15 @@ abstract class QueryableRepository
 	}
 
 	/**
+	 * Returns the query.
+	 * @return [type] [description]
+	 */
+	public function getQuery()
+	{
+		return $this->builder;
+	}
+
+	/**
 	 * Query all the datasets.
 	 * 
 	 * @param  Request $request [description]
