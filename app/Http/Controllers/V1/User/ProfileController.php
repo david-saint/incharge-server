@@ -101,9 +101,9 @@ class ProfileController extends SearchableController
 			// This retrieves the authenticated user
 			$user = $this->user();
 			// Then we create a profile for it.
-			if ($user->profile)
-				$profile = tap($user->profile())->update($data)->fresh();
-			else
+			if ($user->profile) {
+				$profile = tap($user->profile)->update($data);
+			} else
 				$profile = $user->profile()->create($data);
 
 		} catch (\Exception $e)
