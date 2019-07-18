@@ -52,6 +52,7 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
             */
             Route::post('', 'ProfileController@save')->name('save');
             Route::get('', 'ProfileController@index')->name('index');
+            Route::post('algorithm', 'ProfileController@setAlgorithmPlan')->name('set_algorithm_plan');
         });
     });
 });

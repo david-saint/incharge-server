@@ -97,7 +97,6 @@ class ProfileController extends SearchableController
 
 		try
 		{
-			info($data);
 			// This retrieves the authenticated user
 			$user = $this->user();
 			// Then we create a profile for it.
@@ -136,5 +135,41 @@ class ProfileController extends SearchableController
     				->fetchForUser($request, $this->user());
 
 		return new ProfileResource($profile);
+	}
+
+	/**
+	 * Once a contraceptive plan has been set 
+	 * for a profile, persist it to the database.
+	 * 
+	 * @param Request $request [description]
+	 */
+	public function setAlgorithmPlan(Request $request)
+	{
+		$this->validate($request, [
+			'plan'	=>	'required',
+		]);
+
+		try
+		{
+			$profile = $this->user()->profile;
+			// Save the plan on the user's profile
+			$profile->setAttribute('meta->contraceptive_plan', $request->plan);
+			$profile->save();
+
+		} catch (\Exception $e)
+		{
+			return response()->json([
+				'status'	=>	'profile.setAlgorithmPlan',
+				'message'	=>	'Something went wrong when setting the algorithm plan',
+				'error'		=>	app()->environment('production') ?: $e->getMessage(),
+				'trace'		=>	app()->environment('production') ?: $e->getTrace(),
+			], 500);
+		}
+
+		return response()->json([
+			'status' 	=>	'profile.setAlgorithmPlan',
+			'message'	=>	'Successfully set the algorithm plan.',
+			'data'		=>	$request->plan
+		], 200);
 	}
 }
