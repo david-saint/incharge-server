@@ -14,7 +14,7 @@
 foreach (array_diff(scandir(base_path('routes/api/')), array('..', '.')) as $routefile) {
     Route::prefix($routefile)
         ->name("$routefile::")
-        ->domain(config('app.api-domain'))
+        // ->domain(config('app.api-domain'))
         ->namespace(ucfirst(($routefile)))
         ->group(function ($router) use ($routefile) {
             foreach (array_diff(scandir(base_path('routes/api/' . $routefile)), array('..', '.')) as $file) {

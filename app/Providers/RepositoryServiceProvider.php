@@ -22,6 +22,11 @@ class RepositoryServiceProvider extends ServiceProvider
             \App\Repositories\Contracts\ClinicRepositoryInterface::class,
             \App\Repositories\Concrete\ClinicRepository::class
         );
+
+        $this->app->bind(
+            \App\Repositories\Contracts\ProfileRepositoryInterface::class,
+            \App\Repositories\Concrete\ProfileRepository::class
+        );
     }
 
     /**

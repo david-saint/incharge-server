@@ -29,8 +29,6 @@ class ContraceptionReasonContoroller extends Controller
      */
     public function show(ContraceptionReason $reason)
     {
-        $reason->load('profiles');
-
         return new ContraceptionReasonResource($reason);
     }
 }

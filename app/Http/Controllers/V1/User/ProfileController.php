@@ -8,9 +8,10 @@ use App\Models\Profile;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Traits\HandlesAuthenticatedUser;
-use App\Http\Resources\User\ProfileResource;
+use App\Http\Resources\Users\ProfileResource;
+use App\Repositories\Contracts\ProfileRepositoryInterface;
 
-class ProfileController extends Controller
+class ProfileController extends SearchableController
 {
 		
 	/*
@@ -24,64 +25,85 @@ class ProfileController extends Controller
 	|
 	*/
 	 
-	 use HandlesAuthenticatedUser;
+	use HandlesAuthenticatedUser;
+
+    /**
+     * the repository instance.
+     * @var ClinicRepositoryInterface
+     */
+    private $repo;
+
+    /**
+     * The default relationships.
+     * @var array
+     */
+    protected $defaultRelationships;
+
+
+    /**
+     * Initialize the controller with the repository and allowed 
+     * relationships.
+     * @param ProfileRepositoryInterface $repo
+     */
+    public function __construct(ProfileRepositoryInterface $repo)
+    {
+    	parent::__construct();
+    	$this->repo = $repo;
+    	$this->allowedRelationships = [ 'user', 'reason', 'educationLevel' ];
+    	$this->defaultRelationships = [ 'reason', 'educationLevel' ];
+    }
 	 
 
 	/**
-	 * This creates a profile for the authenticated
+	 * This creates or updates a profile for the authenticated
 	 * user if it doesn't already have one.
 	 * 
 	 * @param  Request $request [description]
 	 * @return [type]           [description]
 	 */
-	public function createProfile(Request $request)
+	public function save(Request $request)
 	{
 		$this->validate($request, [
-			'age'				=>	'requied|numeric',
+			'age'				=>	'required|numeric',
 			'gender'			=>	'required|in:MALE,FEMALE,OTHER',
-			'dob'				=>	'required|array',
-			'dob.day'			=>	'required|numeric',
-			'dob.month'			=>	'required',
-			'dob.year'			=>	'required|numeric',
+			'dob'				=>	'required|date',
 			'address'			=>	'required|string',
-			'latitude'			=>	[ 'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/' ],
-			'longitude'			=>	[ 'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/' ],
 			'marital_status'	=>	'required|in:SINGLE,RELATIONSHIP',
 			'height'			=>	'numeric',
 			'weight'			=>	'numeric',
-			'education_level'	=>	'integer|exists:education_levels',
+			'education_level'	=>	'integer|exists:education_levels,id',
 			'occupation'		=>	'string',
 			'children'			=>	'numeric',
-			'reason'			=>	'required|numeric|exists:contraception_reasons',
+			'reason'			=>	'required|numeric|exists:contraception_reasons,id',
 			'sexually_active'	=>	'required|boolean',
 			'pregnancy_status'	=>	'required|boolean',
 			'religion'			=>	'required|in:CHRISTIANITY,ISLAM,OTHER',
 			'religion_sect'		=>	'required_if:religion,CHRISTIANITY',
-		], [
-			'dob.day.required'		=>	'Please specify your birth day',
-			'dob.month.required'	=>	'Please specify your birth month',
-			'dob.year.reqiured'		=>	'Please specify your birth year',
-			'dob.year.numeric'		=>	'Your birth year is not valid',
 		]);
 
-		$dob = new Carbon("{$request->dob['day']} {$request->dob['month']} {$request->dob['year']}");
-
 		$formatted = [
-			'date_of_birth'				=>	$dob,
+			'date_of_birth'				=>	$request->dob,
 			'contraception_reason_id'	=>	$request->reason,
-			'number_of_children'		->	$request->children,
+			'number_of_children'		=>	$request->children,
 			'education_level_id'		=>	$request->education_level,
 		];
 
 		// merge the request data with the formated data.
-		$data = array_merge($request->all(), $formatted);
+		$data = array_merge($request->only([
+			'age', 'gender', 'address', 'marital_status', 'height',
+			'weight', 'occupation', 'sexually_active', 'pregnancy_status',
+			'religion', 'religion_sect'	
+		]), $formatted);
 
 		try
 		{
 			// This retrieves the authenticated user
 			$user = $this->user();
 			// Then we create a profile for it.
-			$profile = $user->profile()->create($data);
+			if ($user->profile) {
+				$profile = tap($user->profile)->update($data);
+			} else
+				$profile = $user->profile()->create($data);
 
 		} catch (\Exception $e)
 		{
@@ -101,89 +123,53 @@ class ProfileController extends Controller
 	}
 
 	/**
-	 * This updates the currently logged in user's 
-	 * profile.
+	 * Get the currently logged in user's profile.
 	 * 
 	 * @param  Request $request [description]
 	 * @return [type]           [description]
 	 */
-	public function updateProfile(Request $request)
+	public function index(Request $request)
+	{
+		$profile = $this->repo
+    				->setAllowedRelationships($this->allowedRelationships)
+    				->fetchForUser($request, $this->user());
+
+		return new ProfileResource($profile);
+	}
+
+	/**
+	 * Once a contraceptive plan has been set 
+	 * for a profile, persist it to the database.
+	 * 
+	 * @param Request $request [description]
+	 */
+	public function setAlgorithmPlan(Request $request)
 	{
 		$this->validate($request, [
-			'age'				=>	'requied|numeric',
-			'gender'			=>	'required|in:MALE,FEMALE,OTHER',
-			'dob'				=>	'required|array',
-			'dob.day'			=>	'required|numeric',
-			'dob.month'			=>	'required',
-			'dob.year'			=>	'required|numeric',
-			'address'			=>	'required|string',
-			'latitude'			=>	[ 'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/' ],
-			'longitude'			=>	[ 'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/' ],
-			'marital_status'	=>	'required|in:SINGLE,RELATIONSHIP',
-			'height'			=>	'numeric',
-			'weight'			=>	'numeric',
-			'education_level'	=>	'integer|exists:education_levels',
-			'occupation'		=>	'string',
-			'children'			=>	'numeric',
-			'reason'			=>	'required|numeric|exists:contraception_reasons',
-			'sexually_active'	=>	'required|boolean',
-			'pregnancy_status'	=>	'required|boolean',
-			'religion'			=>	'required|in:CHRISTIANITY,ISLAM,OTHER',
-			'religion_sect'		=>	'required_if:religion,CHRISTIANITY',
-		], [
-			'dob.day.required'		=>	'Please specify your birth day',
-			'dob.month.required'	=>	'Please specify your birth month',
-			'dob.year.reqiured'		=>	'Please specify your birth year',
-			'dob.year.numeric'		=>	'Your birth year is not valid',
+			'plan'	=>	'required',
 		]);
-
-		$dob = new Carbon("{$request->dob['day']} {$request->dob['month']} {$request->dob['year']}");
-
-		$formatted = [
-			'date_of_birth'				=>	$dob,
-			'contraception_reason_id'	=>	$request->reason,
-			'number_of_children'		->	$request->children,
-			'education_level_id'		=>	$request->education_level,
-		];
-
-		// merge the request data with the formated data.
-		$data = array_merge($request->all(), $formatted);
 
 		try
 		{
-			// This retrieves the authenticated user
-			$user = $this->user();
-			// Then we create a profile for it.
-			$profile = $user->profile()->update($data);
+			$profile = $this->user()->profile;
+			// Save the plan on the user's profile
+			$profile->setAttribute('meta->contraceptive_plan', $request->plan);
+			$profile->save();
 
 		} catch (\Exception $e)
 		{
 			return response()->json([
-				'status'	=>	'profile.update',
-				'message'	=>	'Something went wrong when updating the profile',
+				'status'	=>	'profile.setAlgorithmPlan',
+				'message'	=>	'Something went wrong when setting the algorithm plan',
 				'error'		=>	app()->environment('production') ?: $e->getMessage(),
 				'trace'		=>	app()->environment('production') ?: $e->getTrace(),
 			], 500);
 		}
 
 		return response()->json([
-			'status'	=>	'profile.update',
-			'message'	=>	'Successfully updated the User\'s Profile',
-			'data'		=>	new ProfileResource($profile),
-		], 201);
-	}
-
-	/**
-	 * Get the currently logged in user's profile.
-	 * 
-	 * @return [type] [description]
-	 */
-	public function getProfile()
-	{
-		$user = $this->user();
-
-		$profile = $user->profile->with(['reason', 'educationLevel']);
-
-		return new ProfileResource($profile);
+			'status' 	=>	'profile.setAlgorithmPlan',
+			'message'	=>	'Successfully set the algorithm plan.',
+			'data'		=>	$request->plan
+		], 200);
 	}
 }

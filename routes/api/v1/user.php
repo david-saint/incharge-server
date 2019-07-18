@@ -40,5 +40,19 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
             */
             Route::get('', 'ClinicController@index')->name('index');
         });
+
+        Route::group(['prefix' => 'profile', 'as' => 'profile.'], function () {
+            
+            /*
+             |----------------------------------------------------------------------------
+             | Clinic Requests.
+             |----------------------------------------------------------------------------
+             |
+             | This are the routes handling profile related requests.
+            */
+            Route::post('', 'ProfileController@save')->name('save');
+            Route::get('', 'ProfileController@index')->name('index');
+            Route::post('algorithm', 'ProfileController@setAlgorithmPlan')->name('set_algorithm_plan');
+        });
     });
 });

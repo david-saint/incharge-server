@@ -14,6 +14,7 @@ use App\Repositories\Contracts\ClinicRepositoryInterface;
  */
 class ClinicController extends SearchableController
 {
+    
     /**
      * the repository instance.
      * @var ClinicRepositoryInterface
