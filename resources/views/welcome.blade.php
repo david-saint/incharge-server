@@ -72,9 +72,9 @@
                 </div>
 
                 <div class="links">
+                    <a href="https://documenter.getpostman.com/view/2832792/SVSNJ76c?version=latest">Developer</a>
                     <a href="https://laracasts.com">User</a>
                     <a href="https://laravel.com/docs">Admin</a>
-                    <a href="https://laravel-news.com">Developer</a>
                 </div>
             </div>
         </div>
