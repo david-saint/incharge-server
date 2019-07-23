@@ -18,4 +18,5 @@ Route::group(['namespace' => 'General', 'as' => 'global.'], function () {
 	Route::get('contraception-reasons/{reason}', 'ContraceptionReasonContoroller@show');
 	Route::get('education-levels', 'EducationLevelsController@index');
 	Route::get('faq-groups', 'FaqController@index');
+	Route::get('faq-groups/{faq}', 'FaqController@getContent');
 });

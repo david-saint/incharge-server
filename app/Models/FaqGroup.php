@@ -27,8 +27,8 @@ class FaqGroup extends Model
      * 
      * @return [type] [description]
      */
-    public function faqs()
+    public function faq()
     {
-    	return $this->hasMany(Faq::class);
+    	return $this->hasOne(Faq::class);
     }
 }

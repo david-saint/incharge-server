@@ -14,4 +14,23 @@ class FaqController extends Controller
     {
     	return FaqGroupResource::collection(FaqGroup::all());
     }
+
+    public function getContent(FaqGroup $faq)
+    {
+    	$f = $faq->faq;
+
+    	if (! $f) {
+    		return response()->json([
+				'status'	=>	'faq.get_content',
+				'message'	=>	'Something went wrong when trying to get the faq',
+				'error'		=>	app()->environment('production') ?: $e->getMessage(),
+				'trace'		=>	app()->environment('production') ?: $e->getTrace(),
+			], 500);
+    	}
+
+    	return response()->json([
+    		'data'		=>	$f,
+    		'status'	=>	'faq.get_content',
+    	], 200);
+    }
 }
