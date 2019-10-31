@@ -80,7 +80,7 @@ class UserAuthController extends Controller
 		$this->validate($request, [
 			'name'		=>	'required',
 			'email'		=>	'required|email|unique:users',
-			'phone'		=>	'required|phone:NG|unique:users',
+			'phone'		=>	'phone|unique:users',
 			'password'	=>	'required|min:6',
 		],[
 			'email.unique'	=>	'has already been taken',
