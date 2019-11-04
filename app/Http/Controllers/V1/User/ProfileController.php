@@ -69,13 +69,13 @@ class ProfileController extends SearchableController
 			'gender'			=>	'required|in:MALE,FEMALE,OTHER',
 			'dob'				=>	'date',
 			'address'			=>	'string',
-			'marital_status'	=>	'in:SINGLE,RELATIONSHIP',
+			'marital_status'	=>	'nullable|in:SINGLE,RELATIONSHIP',
 			'height'			=>	'numeric',
 			'weight'			=>	'numeric',
 			'education_level'	=>	'integer|exists:education_levels,id',
 			'occupation'		=>	'string',
 			'children'			=>	'numeric',
-			'reason'			=>	'numeric|exists:contraception_reasons,id',
+			'reason'			=>	'nullable|numeric|exists:contraception_reasons,id',
 			'sexually_active'	=>	'boolean',
 			'pregnancy_status'	=>	'boolean',
 			'religion'			=>	'in:CHRISTIANITY,ISLAM,OTHER',
@@ -83,7 +83,7 @@ class ProfileController extends SearchableController
 		]);
 
 		$formatted = [
-			'date_of_birth'				=>	$request->dob,
+			'date_of_birth'				=>	$request->dob ?? Carbon::now(),
 			'contraception_reason_id'	=>	$request->reason,
 			'number_of_children'		=>	$request->children,
 			'education_level_id'		=>	$request->education_level,
