@@ -84,9 +84,9 @@ class ProfileController extends SearchableController
 
 		$formatted = [
 			'date_of_birth'				=>	$request->dob ?? Carbon::now(),
-			'contraception_reason_id'	=>	$request->reason,
-			'number_of_children'		=>	$request->children,
-			'education_level_id'		=>	$request->education_level,
+			'contraception_reason_id'	=>	$request->reason ?? 3,
+			'number_of_children'		=>	$request->children ?? 0,
+			'education_level_id'		=>	$request->education_level ?? 14,
 		];
 
 		// merge the request data with the formated data.
