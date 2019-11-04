@@ -64,7 +64,7 @@ class ProfileController extends SearchableController
 	public function save(Request $request)
 	{
 		$this->validate($request, [
-			'age'				=>	'required|numeric',
+			'age'				=>	'numeric',
 			'gender'			=>	'required|in:MALE,FEMALE,OTHER',
 			'dob'				=>	'date',
 			'address'			=>	'string',
