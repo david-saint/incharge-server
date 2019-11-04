@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Profile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Traits\HandlesAuthenticatedUser;
 use App\Http\Resources\Users\ProfileResource;
@@ -107,6 +108,7 @@ class ProfileController extends SearchableController
 
 		} catch (\Exception $e)
 		{
+			Log::error($e->getMessage());
 			return response()->json([
 				'status'	=>	'profile.create',
 				'message'	=>	'Something went wrong when creating the profile',
