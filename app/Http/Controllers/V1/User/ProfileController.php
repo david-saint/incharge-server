@@ -78,24 +78,27 @@ class ProfileController extends SearchableController
 			'reason'			=>	'nullable|numeric|exists:contraception_reasons,id',
 			'sexually_active'	=>	'boolean',
 			'pregnancy_status'	=>	'boolean',
-			'religion'			=>	'in:CHRISTIANITY,ISLAM,OTHER',
+			'religion'			=>	'nullable|in:CHRISTIANITY,ISLAM,OTHER',
 			'religion_sect'		=>	'required_if:religion,CHRISTIANITY',
 		]);
 
 		$formatted = [
-			'age'						=> $request->age ?? 0,
-			'marital_status' 			=> $request->marital_status ?? 'SINGLE',
+			'age'						=>	$request->age ?? 0,
+			'marital_status' 			=>	$request->marital_status ?? 'SINGLE',
 			'date_of_birth'				=>	$request->dob ?? Carbon::now(),
 			'contraception_reason_id'	=>	$request->reason ?? 3,
 			'number_of_children'		=>	$request->children ?? 0,
 			'education_level_id'		=>	$request->education_level ?? 14,
+			'address'					=>	$request->address ?? '',
+			'sexually_active'			=>	$request->sexually_active ?? false,
+			'pregnancy_status'			=>	$request->pregnancy_status ?? false,
+			'religion'					=>	$request->religion ?? 'OTHER',
 		];
 
 		// merge the request data with the formated data.
 		$data = array_merge($request->only([
-			'gender', 'address', 'height',
-			'weight', 'occupation', 'sexually_active', 'pregnancy_status',
-			'religion', 'religion_sect'	
+			'gender', 'height',
+			'weight', 'occupation', 'religion_sect'	
 		]), $formatted);
 
 		try
