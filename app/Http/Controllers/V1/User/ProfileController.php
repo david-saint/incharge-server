@@ -83,6 +83,7 @@ class ProfileController extends SearchableController
 		]);
 
 		$formatted = [
+			'age'						=> $request->age ?? 0,
 			'marital_status' 			=> $request->marital_status ?? 'SINGLE',
 			'date_of_birth'				=>	$request->dob ?? Carbon::now(),
 			'contraception_reason_id'	=>	$request->reason ?? 3,
@@ -92,7 +93,7 @@ class ProfileController extends SearchableController
 
 		// merge the request data with the formated data.
 		$data = array_merge($request->only([
-			'age', 'gender', 'address', 'height',
+			'gender', 'address', 'height',
 			'weight', 'occupation', 'sexually_active', 'pregnancy_status',
 			'religion', 'religion_sect'	
 		]), $formatted);
