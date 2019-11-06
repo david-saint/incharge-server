@@ -59,7 +59,7 @@ class ResetPassword extends Notification
         return (new MailMessage)
                     ->from('no-reply@incharge.com.ng', 'InCharge')
                     ->line('Hi ' . $notifiable->name . ',')
-                    ->line('We received a request to reset your Uber password. Click the link below to choose a new one:')
+                    ->line('We received a request to reset your In-Charge password. Click the link below to choose a new one:')
                     ->action('Reset Your Password', $this->url)
                     ->line('If you did not make this request, no further action is required.');
     }
