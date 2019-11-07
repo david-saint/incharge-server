@@ -17,10 +17,11 @@ class UserMiddleware
      */
     public function handle($request, Closure $next)
     {
-       \Auth::setDefaultDriver('users');
+        \Auth::setDefaultDriver('users');
 
         if (Auth::check() && Auth::user() instanceof User) return $next($request);
 
+        info($request->header('Authorization'));
         return response([
             'error' => 'You are not allowed to access this resource'
         ], 401);
