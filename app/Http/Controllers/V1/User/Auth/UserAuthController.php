@@ -83,8 +83,8 @@ class UserAuthController extends Controller
 			'phone'		=>	'phone:AUTO,NG,US|unique:users',
 			'password'	=>	'required|min:6',
 		],[
-			'email.unique'	=>	'has already been taken',
-			'phone.unique'	=>	'has already been taken',
+			'email.unique'	=>	'Email has already been taken',
+			'phone.unique'	=>	'Phone number has already been taken',
 		]);
 
 		try
@@ -172,6 +172,8 @@ class UserAuthController extends Controller
 	 */
 	protected function respondWithToken($token)
 	{
-		return response()->json([ 'token' => $token ], 200);
+		return response()
+				->json([ 'token' => $token ], 200)
+				->withHeaders([ 'Authorization' => 'Bearer ' . $token ]);
 	}
 }
