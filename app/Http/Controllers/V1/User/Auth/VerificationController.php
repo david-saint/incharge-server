@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\V1\User\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 
 class VerificationController extends Controller
@@ -61,6 +62,6 @@ class VerificationController extends Controller
      */
     protected function redirectTo()
     {
-        return route('v1::user.verification.success');
+        return Config::get('app.user-domain', 'https://accounts.incharge.com.ng') . '/email-verified';
     }
 }
