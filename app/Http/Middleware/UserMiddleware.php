@@ -19,9 +19,9 @@ class UserMiddleware
     {
         \Auth::setDefaultDriver('users');
 
+        // allow if a user is logged in
         if (Auth::check() && Auth::user() instanceof User) return $next($request);
 
-        info($request->header('Authorization'));
         return response([
             'error' => 'You are not allowed to access this resource'
         ], 401);

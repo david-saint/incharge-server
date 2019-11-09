@@ -26,6 +26,17 @@ class ProfileRepository extends QueryableRepository implements ProfileRepository
      */
     protected $defaultRelationships;
 
+    /**
+     * List of filters that you expect the 
+     * request to run through. Note that the
+     * filter at the bottom runs first.
+     * 
+     * @var array
+     */
+    protected $filters = [
+    	// Include Filters here.
+    ];
+
 	/**
 	 * Initiallize the repo setting the withBuilder, the queryable fields,
 	 * and tthe builder for the model.
@@ -41,18 +52,6 @@ class ProfileRepository extends QueryableRepository implements ProfileRepository
         $this->builder = (static::MODEL)::query();
         // the default relationships.
         $this->defaultRelationships = [ 'reason', 'educationLevel' ];
-	}
-
-	/**
-	 * Filter the query based on the request.
-	 * 
-	 * @param  [type] $request [description]
-	 * @param  [type] $query   [description]
-	 * @return [type]          [description]
-	 */
-	public function applyFilters($request, $query)
-	{
-		// Apply filters here.
 	}
 
     /**

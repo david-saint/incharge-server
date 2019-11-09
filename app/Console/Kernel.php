@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\GenerateClinics::class,
         Commands\GenerateCountries::class,
+        Commands\FilterMakeCommand::class,
         Commands\GenerateStatesAndLGA::class,
         Commands\GetLocationLongitudeLatitude::class,
     ];

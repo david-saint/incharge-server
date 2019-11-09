@@ -4,6 +4,7 @@ namespace App\Repositories\Concrete;
 
 use Illuminate\Http\Request;
 use App\Traits\WhereBuilder;
+use Illuminate\Pipeline\Pipeline;
 use App\Traits\AppendsRelationships;
 
 abstract class QueryableRepository
@@ -92,6 +93,21 @@ abstract class QueryableRepository
 		$this->order($request, $query);
 
 		return $query;
+	}
+
+	/**
+	 * Filter the query based on the request.
+	 * 
+	 * @param  [type] $request [description]
+	 * @param  [type] $query   [description]
+	 * @return [type]          [description]
+	 */
+	public function applyFilters($request, $query)
+	{
+		return app(Pipeline::class)
+                ->send($query)
+                ->through($this->filters)
+                ->then(function ($passable) { return $passable; });
 	}
 
 	/**
