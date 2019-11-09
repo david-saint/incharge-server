@@ -12,7 +12,8 @@
 |
 */
 
-Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
+Route::group(['namespace' => 'User', 'as' => 'user.'], function ()
+{
 	Route::post('login', 'Auth\UserAuthController@login')->name('auth.login');
     Route::post('logout', 'Auth\UserAuthController@logout')->name('auth.logout');
 
@@ -26,26 +27,33 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
     Route::get('email/success', 'Auth\VerificationController@success')->name('verification.success');
     Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
 
-    Route::group([ 'middleware' => [ 'user', 'auth' ] ], function () {
+
+
+    Route::group(['prefix' => 'clinics', 'as' => 'clinics.'], function ()
+    {
+        
+        /*
+         |----------------------------------------------------------------------------
+         | Clinic Requests.
+         |----------------------------------------------------------------------------
+         |
+         | This are the routes handling clinic related requests.
+        */
+        Route::get('', 'ClinicController@index')->name('index');
+    });
+
+
+
+    Route::group([ 'middleware' => [ 'user', 'auth' ] ], function ()
+    {
         Route::get('', 'Auth\UserAuthController@user')->name('get');
 
-        Route::group(['prefix' => 'clinics', 'as' => 'clinics.'], function () {
+        Route::group(['prefix' => 'profile', 'as' => 'profile.'], function ()
+        {
             
             /*
              |----------------------------------------------------------------------------
-             | Clinic Requests.
-             |----------------------------------------------------------------------------
-             |
-             | This are the routes handling clinic related requests.
-            */
-            Route::get('', 'ClinicController@index')->name('index');
-        });
-
-        Route::group(['prefix' => 'profile', 'as' => 'profile.'], function () {
-            
-            /*
-             |----------------------------------------------------------------------------
-             | Clinic Requests.
+             | Profile Requests.
              |----------------------------------------------------------------------------
              |
              | This are the routes handling profile related requests.
