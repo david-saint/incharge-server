@@ -14,10 +14,11 @@
 
 Route::group(['namespace' => 'User', 'as' => 'user.'], function ()
 {
+    Route::post('register','Auth\UserAuthController@register');
 	Route::post('login', 'Auth\UserAuthController@login')->name('auth.login');
     Route::post('logout', 'Auth\UserAuthController@logout')->name('auth.logout');
 
-    Route::post('register','Auth\UserAuthController@register');
+    
     Route::get('refresh','Auth\UserAuthController@refresh');
 
     Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
@@ -40,6 +41,30 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function ()
          | This are the routes handling clinic related requests.
         */
         Route::get('', 'ClinicController@index')->name('index');
+
+        Route::get('/getClinics', 'ClinicController@getClinics')->name('getClinics');
+        Route::get('/deletedClinics', 'ClinicController@deletedClinic')->name('deletedClinic');
+        Route::put('/update/{clinic_id}', 'ClinicController@update')->name('update');
+        Route::put('/revertDelete/{clinic_id}', 'ClinicController@revertDelete')->name('revertDelete');        
+        Route::post('/addClinic', 'ClinicController@store')->name('store');
+        Route::delete('/deleteClinic/{clinic_id}', 'ClinicController@destroy')->name('deleteClinics');
+    });
+
+    Route::group(['prefix' => 'users', 'as' => 'users.'], function ()
+    {
+        
+        /*
+         |----------------------------------------------------------------------------
+         | Clinic Requests.
+         |----------------------------------------------------------------------------
+         |
+         | This are the routes handling clinic related requests.
+        */
+        Route::get('', 'UsersController@index')->name('users');
+        Route::get('/deletedUser', 'UsersController@deletedUser')->name('deletedUser');
+        Route::put('/update/{user_id}', 'UsersController@update')->name('update');
+        // reactivateUser
+        Route::delete('/deleteUser/{user_id}', 'UsersController@destroy')->name('deleteUsers');
     });
 
 
