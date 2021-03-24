@@ -1,0 +1,121 @@
+:root{
+    --primary:rgb(105, 36, 155);
+    --secondary:#29B6F6;
+    --terciary:#B2EBF2;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+} /* this targets the default scrollbar (compulsory) */
+::-webkit-scrollbar-track {
+    /* box-shadow: inset 0 0 7px rgba(0,0,0,0.8);*/
+    background-color: var(--primary);
+    /*border-radius: 8px;*/
+} /* the new scrollbar will have a flat appearance with the set background color */
+::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 100px var(--primary);
+    background-color: var(--primary); 
+    /*border-radius: 8px;*/
+} /* this will style the thumb, ignoring the track */
+
+::-webkit-scrollbar-button {
+    height: 0;
+    /* background-color: rgba(0,151,0,1);*/
+} /* optionally, you can style the top and the bottom buttons (left and right for horizontal bars) */
+
+::-webkit-scrollbar-corner {
+    background-color: black;
+} /* if both the vertical and the horizontal bars appear, then perhaps the right bottom corner also needs to be styled */
+::-webkit-scrollbar-track-piece {
+    background-color: rgba(255, 255, 255, 1);	
+}
+::-webkit-scrollbar-button:horizontal {
+    width: 5px;
+/* Select the down or left scroll button when it's being hovered by the mouse */
+}
+body {
+    background-color: rgb(241, 233, 247);
+}
+
+nav, #banner, .progress .indeterminate {
+    background-color: var(--primary);
+}
+.progress{
+    background-color: rgba(105, 36, 155, 0.3)
+}
+#panelData {
+    background-color: #fff;
+}
+
+td a .material-icons{
+    font-size: 1.4em;
+}
+#showUserModal h4 {
+    padding-bottom: 2vh;
+    border-bottom: thin solid rgb(221, 218, 218);
+}
+.error {
+    background-color: red;
+    color: white;
+}
+.borderedUD {
+    /* border-top: thin solid #e9e9e9; */
+    border-bottom: thin solid #e9e9e9;
+}
+.gutterBtm {
+    margin-bottom: 20px;
+}
+#mapDiv, #clinicMap, #editMapDiv {
+    height: 60vh;
+}
+#regSuperAdmin, #loginAdmin, footer {
+    background-color: #fff;
+}
+#loginAdmin {
+    padding: 4vh;
+    margin-top: 8vh;
+}
+footer {
+    padding: 1vh;
+}
+@media only screen and (min-width: 993px){
+    #panelData {
+        background-color: #fff;
+        position: relative;
+        top: -22vh;
+    }
+    
+    .container {
+        width: 80%;
+    }
+    #banner {
+        height: 25vh;
+    }
+    #panelData h2 {
+        text-align: center;
+        margin-top: 2vh;
+    }
+    h2 small {
+        font-size: 0.26em;
+        line-height: 6;
+    }
+    #showAddAlgoModal.modal {
+        width: 70%;
+    }
+}
+
+@media only screen and (max-width: 992px){
+    nav .brand-logo {
+        width: 50vw;
+    }
+    #panelData {
+        margin-top: 2vh;
+    }
+    #panelData #users .row.mainData, #panelData #clinics .row.mainData {
+        margin-bottom: 40px;
+    }
+    h2 small {
+        font-size: 0.28em;
+        line-height: 5;
+    }
+}

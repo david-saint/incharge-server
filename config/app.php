@@ -56,11 +56,12 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
-    'api-domain' => env('API_DOMAIN', 'api.incharge.ml'),
+    // 'api-domain' => env('API_DOMAIN', 'api.incharge.ml'),
+    'api-domain' => env('API_DOMAIN', '192.168.43.2'),
 
-    'admin-domain' => env('ADMIN_URL', 'incharge.ml'),
+    'admin-domain' => env('ADMIN_URL', 'incharge-server.io'),
     
-    'user-domain' => env('USER_URL', 'incharge.ml'),
+    'user-domain' => env('USER_URL', 'incharge-server.io'),
 
     /*
     |--------------------------------------------------------------------------
