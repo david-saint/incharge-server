@@ -15,11 +15,11 @@
 Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
 	Route::resource('', 'AdminController');
 	Route::get('loginView', 'AdminController@loginView');
-	Route::get('panel', 'AdminController@panel');
-	Route::get('getAdminDet', 'AdminController@getAdminDet');
+	Route::get('panel', 'AdminController@panel')->middleware('auth');
+	Route::get('getAdminDet', 'AdminController@getAdminDet')->middleware('auth');
 	Route::get('logout', 'AdminController@logout');	
 	// Route::get('algo', 'AdminController@algo');	
 	Route::post('login', 'AdminController@login');
-	Route::resource('algo', 'AlgorithmController');
-	Route::get('algorithm', 'AlgorithmController@algoJSON');
+	Route::resource('algo', 'AlgorithmController')->middleware('auth');
+	Route::get('algorithm', 'AlgorithmController@algoJSON')->middleware('auth');
 });

@@ -22,71 +22,9 @@ class AlgorithmController extends Controller
 
     public function algoJSON()
     {
-        // $user = User::where('id', '=', $userId)->with('profile')->get();
-        // $userProfile = $user[0]['profile'];
         $algo = Algorithm::where('active', '=', 'true')->get();
         return $algo;
-        // $json = [];
-
-    //     function conditional($alg, $algo, $userProfile) {
-    //         switch($alg['conditionalOperator']){
-    //             case '>':
-    //                 if($userProfile[$alg['conditionalFactor']] > $alg['conditionalValue']){
-    //                     return $algo[$alg['onPositive'] - 1];
-    //                 } else {
-    //                     return $algo[$alg['onNegative'] - 1];
-    //                 }
-    //                 break;
-    //             case '<':
-    //                 if($userProfile[$alg['conditionalFactor']] < $alg['conditionalValue']){
-    //                     return $algo[$alg['onPositive'] - 1];
-    //                 } else {
-    //                     return $algo[$alg['onNegative'] - 1];
-    //                 }
-    //                 break;
-    //             case '>=':
-    //                 if($userProfile[$alg['conditionalFactor']] >= $alg['conditionalValue']){
-    //                     return $algo[$alg['onPositive'] - 1];
-    //                 } else {
-    //                     return $algo[$alg['onNegative'] - 1];
-    //                 }
-    //                 break;
-    //             case '<=':
-    //                 if($userProfile[$alg['conditionalFactor']] <= $alg['conditionalValue']){
-    //                     return $algo[$alg['onPositive'] - 1];
-    //                 } else {
-    //                     return $algo[$alg['onNegative'] - 1];
-    //                 }
-    //                 break;
-    //             case '!=':
-    //                 if($userProfile[$alg['conditionalFactor']] != $alg['conditionalValue']){
-    //                     return $algo[$alg['onPositive'] - 1];
-    //                 } else {
-    //                     return $algo[$alg['onNegative'] - 1];
-    //                 }
-    //                 break;
-    //             case '=':
-    //                 // code to be executed if n=label3;
-    //                 if($userProfile[$alg['conditionalFactor']] == $alg['conditionalValue']){
-    //                     return $algo[$alg['onPositive'] - 1];
-    //                 } else {
-    //                     return $algo[$alg['onNegative'] - 1];
-    //                 }
-    //                 break;
-    //             default:
-    //                 // code to be executed if n is different from all labels;
-    //         }
-    //     }
-
-    //     foreach ($algo as $alg) {
-    //         if($alg['text'] == 'Empty'){//conditional
-    //             //check operator
-    //             $step = conditional($alg, $algo, $userProfile);
-    //             array_push($json, $step);
-    //         }
-    //         // return $alg;
-    //     }
-    //     return $json;
+        
     }
 
     /**
@@ -107,9 +45,6 @@ class AlgorithmController extends Controller
      */
     public function store(Request $request)
     {
-        // 'text', 'actionType', 'positive', 'negative', 'onPositive',
-        // 'onNegative', 'nextMove', 'tempPlan', 'delay', 'series', 'active',
-        // 'conditionalFactor', 'conditionalOperator', 'conditionalValue'
         $request->validate([
             'text' => ['nullable','string'],
             'actionType' => ['string','nullable'],

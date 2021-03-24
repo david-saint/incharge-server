@@ -95,44 +95,6 @@ class AdminController extends Controller
         
     }
 
-    public function algo(){
-        return response()->json([
-            [
-                "id" => 1,
-                "text" => "Hello, Chigozie Chukwu",
-                "delay" => 500,
-                "nextMove" => 1,
-            ],
-            [
-                "id" => 2,
-                "text" => 'Would you like to consider other family planning methods apart from the Natural types?', 
-                "delay" => 500,
-                "actionType" => 'bool',
-                "positive" => 'Yes',
-                "negative" => 'No',
-                "onNegative" => 2,
-                "onPositive" => 3
-            ],
-            [
-                "id" => 3,
-                "text" => "The Natural Family Planning Methods include: Withdrawal method, and Fertile Period Monitor. As a man the withdrawal method is the best contraceptive plan for you. You should withdraw your penis from your partner's vagina and ejaculate outside the vagina.", 
-                "delay" => 1000,
-                // "actionsType" => "next",
-                "nextMove" => 6,
-                "tempPlan" => 'WITHDRAWAL_METHOD'
-            ],
-            [
-                "id" => 5,
-                "text" => 'Great, Let\'s find out what contraceptive plan is right for you.',
-                "delay" => 1000,
-                // "actionsType" => "next",
-                "nextMove" => 3,
-                "tempPlan" => ''
-            ]
-		], 200);
-    }
-
-    
     public function logout(Request $request)
     {
         Auth::logout();
