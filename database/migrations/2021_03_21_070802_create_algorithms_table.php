@@ -28,8 +28,8 @@ class CreateAlgorithmsTable extends Migration
             $table->string('conditionalValue')->nullable();
             $table->string('label')->nullable();
             $table->string('stateValue')->nullable();
-            $table->string('progestogenPossible', ['true', 'false'])->nullable(); 
-            $table->string('progestogenPossibleDir', ['positive', 'negative'])->nullable();  
+            $table->enum('progestogenPossible', ['true', 'false'])->nullable(); 
+            $table->enum('progestogenPossibleDir', ['positive', 'negative'])->nullable();  
             $table->string('tempPlanDirN')->nullable(); 
             $table->string('tempPlanDirP')->nullable(); 
             $table->integer('delay');
