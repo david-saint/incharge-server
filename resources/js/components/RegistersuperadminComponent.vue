@@ -71,10 +71,10 @@
                 e.preventDefault();
                 if(this.add.password == this.add.cPassword){
                     axios
-                    .post("/api/v1/admin", this.add)
+                    .post("/admin", this.add)
                     .then(res => {
                         if(res.data == 200){
-                            window.location.replace("/api/v1/admin");
+                            window.location.replace("/admin");
                         } else {
                             M.toast({html: 'Error. Please try again', classes: 'error'});
                         }

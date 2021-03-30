@@ -24,7 +24,6 @@ class AlgorithmController extends Controller
     {
         $algo = Algorithm::where('active', '=', 'true')->get();
         return $algo;
-        
     }
 
     /**

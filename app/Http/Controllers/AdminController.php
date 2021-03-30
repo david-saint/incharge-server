@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\V1\Admin;
+namespace App\Http\Controllers;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -9,12 +9,11 @@ use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
-    
     public function index()
     {
         $superAdmin = Admin::where('userType', '=', 'Super')->get();
         if(count($superAdmin) > 0){
-            return redirect('/api/v1/admin/loginView');
+            return redirect('/loginView');
         } else {
             return view('admin/regSuperUser');
         }
@@ -95,6 +94,8 @@ class AdminController extends Controller
         
     }
 
+
+    
     public function logout(Request $request)
     {
         Auth::logout();
@@ -103,7 +104,7 @@ class AdminController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/api/v1/admin');
+        return redirect('/admin');
     }
 
     /**
