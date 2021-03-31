@@ -20,6 +20,7 @@ Route::get('/privacy', function () {
 });
 
 Route::resource('/admin', 'AdminController');
+Route::get('/allAdmins', 'AdminController@allAdmins');
 Route::get('/loginView', 'AdminController@loginView');
 Route::get('/panel', 'AdminController@panel');
 Route::get('/getAdminDet', 'AdminController@getAdminDet');

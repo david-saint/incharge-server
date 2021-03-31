@@ -28,7 +28,7 @@ class AdminController extends Controller
         if(Auth()->check()){
             return view('admin/admin');
         } else {
-            return redirect('/api/v1/admin');
+            return redirect('/admin');
         }
     }
     public function loginView(){
@@ -66,15 +66,17 @@ class AdminController extends Controller
             'email' => ['required','email'],
             'phone' => ['required','string'],
             'password' => ['required','string'],
-            'verified' => ['required','string']
+            'verified' => ['required','string'],
+            'userType' => ['required','string']
         ]);
 
         $admin = Admin::create([
             'firstname'     => $request->firstname,
-            'lastname'     => $request->firstname,
+            'lastname'     => $request->lastname,
             'email'     => $request->email,
             'verified' => $request->verified,
             'phone' => $request->phone,
+            'userType' => $request->userType,
             'password' => $pass = bcrypt($request->password),
         ]);
 
@@ -83,7 +85,10 @@ class AdminController extends Controller
             $adminToken = $admin->createToken('accessToken')->accessToken;
             $admin->accessToken = $adminToken;
             $admin->save();
-            auth()->login($admin, true);
+            if($request->userType == 'Super'){
+                auth()->login($admin, true);
+            }
+            
 
             echo 200;
                
@@ -94,7 +99,10 @@ class AdminController extends Controller
         
     }
 
-
+    public function allAdmins(){
+        $admin = Admin::orderBy('verified', 'DESC')->paginate(50);
+        return response()->json($admin, 200);
+    }
     
     public function logout(Request $request)
     {
@@ -108,17 +116,6 @@ class AdminController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -127,7 +124,13 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $admin = Admin::findOrFail($id);
+        $res = $admin->update($request->only('firstname', 'lastname', 'phone', 'email', 'verified', 'userType', 'accessToken'));
+        if($res){
+            return response()->json('Done', 200);
+        } else {
+            return response()->json('Not DOne', 501);
+        }   
     }
 
     /**

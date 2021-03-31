@@ -2868,22 +2868,139 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       adminNames: '',
       adminId: 0,
       adminUserToken: '',
+      adminUserType: '',
       dataReady: false,
       deleteUserReady: false,
       updateUserReady: false,
       updateAlgoStatus: false,
       deleteClinicReady: false,
       updateClinicReady: false,
+      adminVerifyAction: false,
+      adminAddAction: false,
       users: [],
       user: [],
       clinics: [],
       clinic: [],
+      admins: [],
+      admin: [],
       eduLevel: [],
       contraceptiveReason: [],
       deletedUsers: [],
@@ -2914,6 +3031,18 @@ __webpack_require__.r(__webpack_exports__);
         from: 0,
         to: 0
       },
+      adminPagination: {
+        path: '',
+        currentPage: 0,
+        lastPage: 0,
+        firstPageUrl: '',
+        prevPageUrl: '',
+        nextPageUrl: '',
+        lastPageUrl: '',
+        total: 0,
+        from: 0,
+        to: 0
+      },
       addClinic: {
         name: "",
         address: "",
@@ -2923,6 +3052,7 @@ __webpack_require__.r(__webpack_exports__);
       },
       addClinicFeedback: '<small>Your current location will be saved as this clinics location. Please if it is not, locate it on the map above.</small>',
       addAlgo: {},
+      addAdmin: {},
       algos: [],
       algo: [],
       editAlgo: {
@@ -2954,6 +3084,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.getEduLevel();
 
         _this.getContraReason();
+
+        _this.getAdmins();
       }
     }, 1000);
   },
@@ -2966,6 +3098,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.adminId = res.data.id;
         _this2.adminNames = res.data.firstname + ' ' + res.data.lastname;
         _this2.adminUserToken = res.data.accessToken;
+        _this2.adminUserType = res.data.userType;
       });
     },
     getUsers: function getUsers() {
@@ -2985,48 +3118,66 @@ __webpack_require__.r(__webpack_exports__);
         _this3.pagination.to = res.data.to;
       });
     },
-    getClinics: function getClinics() {
+    getAdmins: function getAdmins() {
       var _this4 = this;
+
+      // allAdmins
+      axios.get("/allAdmins").then(function (res) {
+        _this4.admins = res.data.data;
+        _this4.adminPagination.currentPage = res.data.current_page;
+        _this4.adminPagination.lastPage = res.data.last_page;
+        _this4.adminPagination.firstPageUrl = res.data.first_page_url;
+        _this4.adminPagination.prevPageUrl = res.data.prev_page_url;
+        _this4.adminPagination.nextPageUrl = res.data.next_page_url;
+        _this4.adminPagination.lastPageUrl = res.data.last_page_url;
+        _this4.adminPagination.total = res.data.total;
+        _this4.adminPagination.path = res.data.path;
+        _this4.adminPagination.from = res.data.from;
+        _this4.adminPagination.to = res.data.to;
+      });
+    },
+    getClinics: function getClinics() {
+      var _this5 = this;
 
       // this.dataReady = true;
       axios.get("/api/v1/user/clinics/getClinics").then(function (res) {
-        _this4.clinics = res.data.data;
-        _this4.clinicPagination.currentPage = res.data.current_page;
-        _this4.clinicPagination.lastPage = res.data.last_page;
-        _this4.clinicPagination.firstPageUrl = res.data.first_page_url;
-        _this4.clinicPagination.prevPageUrl = res.data.prev_page_url;
-        _this4.clinicPagination.nextPageUrl = res.data.next_page_url;
-        _this4.clinicPagination.lastPageUrl = res.data.last_page_url;
-        _this4.clinicPagination.total = res.data.total;
-        _this4.clinicPagination.path = res.data.path;
-        _this4.clinicPagination.from = res.data.from;
-        _this4.clinicPagination.to = res.data.to; // console.log(res.data);
+        _this5.clinics = res.data.data;
+        _this5.clinicPagination.currentPage = res.data.current_page;
+        _this5.clinicPagination.lastPage = res.data.last_page;
+        _this5.clinicPagination.firstPageUrl = res.data.first_page_url;
+        _this5.clinicPagination.prevPageUrl = res.data.prev_page_url;
+        _this5.clinicPagination.nextPageUrl = res.data.next_page_url;
+        _this5.clinicPagination.lastPageUrl = res.data.last_page_url;
+        _this5.clinicPagination.total = res.data.total;
+        _this5.clinicPagination.path = res.data.path;
+        _this5.clinicPagination.from = res.data.from;
+        _this5.clinicPagination.to = res.data.to; // console.log(res.data);
       });
     },
     getAlgo: function getAlgo() {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.get("/api/v1/admin/algo").then(function (res) {
-        _this5.algos = res.data;
+        _this6.algos = res.data;
       });
     },
     getEduLevel: function getEduLevel() {
-      var _this6 = this;
+      var _this7 = this;
 
       axios.get("/api/v1/global/education-levels").then(function (res) {
-        _this6.eduLevel = res.data;
+        _this7.eduLevel = res.data;
       });
     },
     getContraReason: function getContraReason() {
-      var _this7 = this;
+      var _this8 = this;
 
       axios.get("/api/v1/global/contraception-reasons").then(function (res) {
-        _this7.contraceptiveReason = res.data;
-        _this7.dataReady = false;
+        _this8.contraceptiveReason = res.data;
+        _this8.dataReady = false;
       });
     },
     showEditClinicModal: function showEditClinicModal(id) {
-      var _this8 = this;
+      var _this9 = this;
 
       this.findAClinic(id);
 
@@ -3051,9 +3202,9 @@ __webpack_require__.r(__webpack_exports__);
         });
         google.maps.event.addListener(map, "click", function (event) {
           // get lat/lon of click
-          _this8.clinic.latitude = event.latLng.lat().toFixed(6);
-          _this8.clinic.longitude = event.latLng.lng().toFixed(6);
-          var clickLatlng = new google.maps.LatLng(_this8.clinic.latitude, _this8.clinic.longitude); //Clear Marker
+          _this9.clinic.latitude = event.latLng.lat().toFixed(6);
+          _this9.clinic.longitude = event.latLng.lng().toFixed(6);
+          var clickLatlng = new google.maps.LatLng(_this9.clinic.latitude, _this9.clinic.longitude); //Clear Marker
 
           marker.setMap(null);
           marker = new google.maps.Marker({
@@ -3070,14 +3221,14 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     showAddClinicModal: function showAddClinicModal() {
-      var _this9 = this;
+      var _this10 = this;
 
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
-          _this9.addClinic.latitude = position.coords.latitude.toFixed(6);
-          _this9.addClinic.longitude = position.coords.longitude.toFixed(6);
+          _this10.addClinic.latitude = position.coords.latitude.toFixed(6);
+          _this10.addClinic.longitude = position.coords.longitude.toFixed(6);
           var marker;
-          var myLatlng = new google.maps.LatLng(_this9.addClinic.latitude, _this9.addClinic.longitude);
+          var myLatlng = new google.maps.LatLng(_this10.addClinic.latitude, _this10.addClinic.longitude);
           var myOptions = {
             zoom: 15,
             center: myLatlng,
@@ -3092,9 +3243,9 @@ __webpack_require__.r(__webpack_exports__);
           });
           google.maps.event.addListener(map, "click", function (event) {
             // get lat/lon of click
-            _this9.addClinic.latitude = event.latLng.lat().toFixed(6);
-            _this9.addClinic.longitude = event.latLng.lng().toFixed(6);
-            var clickLatlng = new google.maps.LatLng(_this9.addClinic.latitude, _this9.addClinic.longitude); //Clear Marker
+            _this10.addClinic.latitude = event.latLng.lat().toFixed(6);
+            _this10.addClinic.longitude = event.latLng.lng().toFixed(6);
+            var clickLatlng = new google.maps.LatLng(_this10.addClinic.latitude, _this10.addClinic.longitude); //Clear Marker
 
             marker.setMap(null);
             marker = new google.maps.Marker({
@@ -3119,10 +3270,13 @@ __webpack_require__.r(__webpack_exports__);
       });
       this.algo = algo[0];
       this.editAlgo = this.algo;
-      console.log(this.editAlgo); // this.editAlgo.onPositive = this.algo.onPositive;
-      // this.editAlgo.onNegative = this.algo.onNegative;
-      // this.editAlgo.positive = this.algo.positive;
-      // this.editAlgo.negative = this.algo.negative;
+    },
+    showAddAdminModal: function showAddAdminModal(id) {
+      this.admin = [];
+      var admin = this.admins.filter(function (admin) {
+        return admin.id == id;
+      });
+      this.admin = admin[0];
     },
     updateAlog: function updateAlog(algoId, updateType) {
       this.updateAlgoStatus = true;
@@ -3185,18 +3339,49 @@ __webpack_require__.r(__webpack_exports__);
 
       this.algoUpdateAPI(algoId, data);
     },
+    toggleVerified: function toggleVerified(adminId, e) {
+      var _this11 = this;
+
+      this.adminVerifyAction = true;
+      var data;
+
+      if (e.target.checked) {
+        data = {
+          verified: 'Y'
+        };
+      } else {
+        data = {
+          verified: 'N'
+        };
+      }
+
+      axios.put("/admin/" + adminId, data).then(function (res) {
+        if (res.status == 200) {
+          M.toast({
+            html: 'Admin verification action complete.'
+          });
+        } else {
+          M.toast({
+            html: 'Admin not verified.',
+            classes: 'error'
+          });
+        }
+
+        _this11.adminVerifyAction = false;
+      });
+    },
     algoUpdateAPI: function algoUpdateAPI(algoId, data) {
-      var _this10 = this;
+      var _this12 = this;
 
       axios.put("/api/v1/admin/algo/" + algoId, data).then(function (res) {
         if (res.status == 200) {
-          _this10.algos.forEach(function (alg, i) {
+          _this12.algos.forEach(function (alg, i) {
             if (alg.id == res.data.id) {
-              _this10.algos[i] = res.data;
+              _this12.algos[i] = res.data;
             }
           });
 
-          _this10.updateAlgoStatus = false; // this.algo = [];
+          _this12.updateAlgoStatus = false; // this.algo = [];
         } else {
           M.toast({
             html: 'Algorithm not edited.',
@@ -3206,7 +3391,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     editClinicOp: function editClinicOp(e) {
-      var _this11 = this;
+      var _this13 = this;
 
       e.preventDefault();
       this.updateClinicReady = true;
@@ -3220,7 +3405,7 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
 
-        _this11.updateClinicReady = false;
+        _this13.updateClinicReady = false;
       });
     },
     addClinicOp: function addClinicOp(e) {
@@ -3244,22 +3429,61 @@ __webpack_require__.r(__webpack_exports__);
         console.log(err);
       });
     },
+    addAdminOp: function addAdminOp(e) {
+      var _this14 = this;
+
+      this.adminAddAction = true;
+      e.preventDefault();
+      var config = {
+        headers: {
+          Authorization: "Bearer " + this.adminUserToken
+        }
+      };
+
+      if (this.addAdmin.password != this.addAdmin.cPassword) {
+        M.toast({
+          html: "Passwords do not match",
+          classes: 'error'
+        });
+        this.adminAddAction = false;
+      } else {
+        this.addAdmin.verified = 'N';
+        this.addAdmin.userType = 'Sub';
+        axios.post("/admin", this.addAdmin, config).then(function (res) {
+          if (res.status == 200) {
+            location.reload();
+          } else {
+            M.toast({
+              html: "Admin not added",
+              classes: 'error'
+            });
+          }
+
+          _this14.adminAddAction = false;
+        })["catch"](function (err) {
+          M.toast({
+            html: "Error! Please ensure you are not trying to create a duplicate admin account. Try again later",
+            classes: 'error'
+          });
+        });
+      }
+    },
     getDeletedUsers: function getDeletedUsers() {
-      var _this12 = this;
+      var _this15 = this;
 
       this.deletedUsersData = true;
       axios.get("/api/v1/user/users/deletedUser").then(function (res) {
-        _this12.deletedUsers = res.data;
-        _this12.deletedUsersData = false;
+        _this15.deletedUsers = res.data;
+        _this15.deletedUsersData = false;
       });
     },
     getDeletedClinics: function getDeletedClinics() {
-      var _this13 = this;
+      var _this16 = this;
 
       this.deletedClinicsData = true;
       axios.get("/api/v1/user/clinics/deletedClinics").then(function (res) {
-        _this13.deletedClinics = res.data;
-        _this13.deletedClinicsData = false;
+        _this16.deletedClinics = res.data;
+        _this16.deletedClinicsData = false;
       });
     },
     showUserDetails: function showUserDetails(id) {
@@ -3303,7 +3527,7 @@ __webpack_require__.r(__webpack_exports__);
       this.findAClinic(id);
     },
     deleteUser: function deleteUser(id) {
-      var _this14 = this;
+      var _this17 = this;
 
       this.deleteUserReady = true;
       axios["delete"]("/api/v1/user/users/deleteUser/" + id).then(function (res) {
@@ -3316,11 +3540,11 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
 
-        _this14.deleteUserReady = false;
+        _this17.deleteUserReady = false;
       });
     },
     deleteClinic: function deleteClinic(id) {
-      var _this15 = this;
+      var _this18 = this;
 
       this.deleteClinicReady = true;
       axios["delete"]("/api/v1/user/clinics/deleteClinic/" + id).then(function (res) {
@@ -3333,11 +3557,11 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
 
-        _this15.deleteClinicReady = false;
+        _this18.deleteClinicReady = false;
       });
     },
     revertUser: function revertUser(id) {
-      var _this16 = this;
+      var _this19 = this;
 
       this.updateUserReady = true;
       var data = {
@@ -3353,11 +3577,11 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
 
-        _this16.updateUserReady = false;
+        _this19.updateUserReady = false;
       });
     },
     revertClinic: function revertClinic(id) {
-      var _this17 = this;
+      var _this20 = this;
 
       this.updateClinicReady = true;
       var data = {
@@ -3373,48 +3597,48 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
 
-        _this17.updateClinicReady = false;
+        _this20.updateClinicReady = false;
       });
     },
     getPageData: function getPageData(pageNum) {
-      var _this18 = this;
+      var _this21 = this;
 
       var url = this.pagination.path + '?page=' + pageNum;
       this.dataReady = true;
       axios.get(url).then(function (res) {
-        _this18.users = res.data.data;
-        _this18.pagination.currentPage = res.data.current_page;
-        _this18.pagination.lastPage = res.data.last_page;
-        _this18.pagination.firstPageUrl = res.data.first_page_url;
-        _this18.pagination.prevPageUrl = res.data.prev_page_url;
-        _this18.pagination.nextPageUrl = res.data.next_page_url;
-        _this18.pagination.lastPageUrl = res.data.last_page_url;
-        _this18.pagination.total = res.data.total;
-        _this18.pagination.path = res.data.path;
-        _this18.pagination.from = res.data.from;
-        _this18.pagination.to = res.data.to;
-        _this18.dataReady = false;
+        _this21.users = res.data.data;
+        _this21.pagination.currentPage = res.data.current_page;
+        _this21.pagination.lastPage = res.data.last_page;
+        _this21.pagination.firstPageUrl = res.data.first_page_url;
+        _this21.pagination.prevPageUrl = res.data.prev_page_url;
+        _this21.pagination.nextPageUrl = res.data.next_page_url;
+        _this21.pagination.lastPageUrl = res.data.last_page_url;
+        _this21.pagination.total = res.data.total;
+        _this21.pagination.path = res.data.path;
+        _this21.pagination.from = res.data.from;
+        _this21.pagination.to = res.data.to;
+        _this21.dataReady = false;
       });
     },
     getClinicPageData: function getClinicPageData(pageNum) {
-      var _this19 = this;
+      var _this22 = this;
 
       var url = this.clinicPagination.path + '?page=' + pageNum;
       this.dataReady = true; // console.log(url);
 
       axios.get(url).then(function (res) {
-        _this19.clinics = res.data.data;
-        _this19.clinicPagination.currentPage = res.data.current_page;
-        _this19.clinicPagination.lastPage = res.data.last_page;
-        _this19.clinicPagination.firstPageUrl = res.data.first_page_url;
-        _this19.clinicPagination.prevPageUrl = res.data.prev_page_url;
-        _this19.clinicPagination.nextPageUrl = res.data.next_page_url;
-        _this19.clinicPagination.lastPageUrl = res.data.last_page_url;
-        _this19.clinicPagination.total = res.data.total;
-        _this19.clinicPagination.path = res.data.path;
-        _this19.clinicPagination.from = res.data.from;
-        _this19.clinicPagination.to = res.data.to;
-        _this19.dataReady = false;
+        _this22.clinics = res.data.data;
+        _this22.clinicPagination.currentPage = res.data.current_page;
+        _this22.clinicPagination.lastPage = res.data.last_page;
+        _this22.clinicPagination.firstPageUrl = res.data.first_page_url;
+        _this22.clinicPagination.prevPageUrl = res.data.prev_page_url;
+        _this22.clinicPagination.nextPageUrl = res.data.next_page_url;
+        _this22.clinicPagination.lastPageUrl = res.data.last_page_url;
+        _this22.clinicPagination.total = res.data.total;
+        _this22.clinicPagination.path = res.data.path;
+        _this22.clinicPagination.from = res.data.from;
+        _this22.clinicPagination.to = res.data.to;
+        _this22.dataReady = false;
       });
     },
     showAddAlgoModal: function showAddAlgoModal() {},
@@ -39353,11 +39577,35 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _vm._m(2)
+        _c("div", { staticClass: "nav-content" }, [
+          _c("ul", { staticClass: "tabs tabs-transparent" }, [
+            _vm._m(2),
+            _vm._v(" "),
+            _vm._m(3),
+            _vm._v(" "),
+            _vm._m(4),
+            _vm._v(" "),
+            _c(
+              "li",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.adminUserType == "Super",
+                    expression: "adminUserType == 'Super'"
+                  }
+                ],
+                staticClass: "tab"
+              },
+              [_c("a", { attrs: { href: "#admin" } }, [_vm._v("Admin")])]
+            )
+          ])
+        ])
       ])
     ]),
     _vm._v(" "),
-    _vm._m(3),
+    _vm._m(5),
     _vm._v(" "),
     _c("div", { attrs: { id: "banner" } }),
     _vm._v(" "),
@@ -39367,7 +39615,7 @@ var render = function() {
           _c("h2", [_vm._v("Users")]),
           _vm._v(" "),
           _vm.dataReady
-            ? _c("div", { staticClass: "center-align" }, [_vm._m(4)])
+            ? _c("div", { staticClass: "center-align" }, [_vm._m(6)])
             : _c("div", [
                 _c("div", { staticClass: "row mainData" }, [
                   _c("div", { staticClass: "col l12 m12 s12 borderedUD" }, [
@@ -39397,13 +39645,13 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col l12 m12 s12" }, [
                     _c("table", { staticClass: "highlight responsive-table" }, [
-                      _vm._m(5),
+                      _vm._m(7),
                       _vm._v(" "),
                       _c(
                         "tbody",
                         [
                           _vm.users.length < 1
-                            ? _c("tr", [_vm._m(6)])
+                            ? _c("tr", [_vm._m(8)])
                             : _vm._l(_vm.users, function(user, index) {
                                 return _c("tr", { key: user.id }, [
                                   _c("td", [_vm._v(_vm._s(index + 1))]),
@@ -39642,13 +39890,13 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "col l12 m12 s12" }, [
               _c("table", { staticClass: "highlight responsive-table" }, [
-                _vm._m(7),
+                _vm._m(9),
                 _vm._v(" "),
                 _c(
                   "tbody",
                   [
                     _vm.clinics.length < 1
-                      ? _c("tr", [_vm._m(8)])
+                      ? _c("tr", [_vm._m(10)])
                       : _vm._l(_vm.clinics, function(clinic, index) {
                           return _c("tr", { key: clinic.id }, [
                             _c("td", [_vm._v(_vm._s(index + 1))]),
@@ -39904,13 +40152,13 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "col l12 m12 s12" }, [
               _c("table", { staticClass: "highlight responsive-table" }, [
-                _vm._m(9),
+                _vm._m(11),
                 _vm._v(" "),
                 _c(
                   "tbody",
                   [
                     _vm.clinics.length < 1
-                      ? _c("tr", [_vm._m(10)])
+                      ? _c("tr", [_vm._m(12)])
                       : _vm._l(_vm.algos, function(alg) {
                           return _c("tr", { key: alg.id }, [
                             _c("td", [_vm._v(_vm._s(alg.id))]),
@@ -40007,14 +40255,140 @@ var render = function() {
               ])
             ])
           ])
-        ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "span",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.adminUserType == "Super",
+                expression: "adminUserType == 'Super'"
+              }
+            ]
+          },
+          [
+            _c("div", { staticClass: "col s12", attrs: { id: "admin" } }, [
+              _c("h2", [_vm._v("Admins")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col l12 m12 s12 borderedUD" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass:
+                        "blue-text waves-effect waves-light btn-flat modal-trigger",
+                      attrs: { href: "#", "data-target": "showAddAdminModal" },
+                      on: {
+                        click: function($event) {
+                          return _vm.showAddAdminModal()
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "material-icons left" }, [
+                        _vm._v("add")
+                      ]),
+                      _vm._v("Add Admin\n                            ")
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col l12 m12 s12" }, [
+                  _c("table", { staticClass: "highlight responsive-table" }, [
+                    _vm._m(13),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.adminVerifyAction,
+                            expression: "adminVerifyAction"
+                          }
+                        ],
+                        staticClass: "progress"
+                      },
+                      [_c("div", { staticClass: "indeterminate" })]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      [
+                        _vm.admins.length < 1
+                          ? _c("tr", [_vm._m(14)])
+                          : _vm._l(_vm.admins, function(admin, index) {
+                              return _c("tr", { key: admin.id }, [
+                                _c("td", [_vm._v(_vm._s(index + 1))]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  admin.verified == "Y"
+                                    ? _c("label", [
+                                        _c("input", {
+                                          attrs: {
+                                            type: "checkbox",
+                                            checked: ""
+                                          },
+                                          on: {
+                                            change: function($event) {
+                                              return _vm.toggleVerified(
+                                                admin.id,
+                                                $event
+                                              )
+                                            }
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("span")
+                                      ])
+                                    : _c("label", [
+                                        _c("input", {
+                                          attrs: { type: "checkbox" },
+                                          on: {
+                                            change: function($event) {
+                                              return _vm.toggleVerified(
+                                                admin.id,
+                                                $event
+                                              )
+                                            }
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("span")
+                                      ])
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(
+                                    _vm._s(admin.firstname) +
+                                      " " +
+                                      _vm._s(admin.lastname)
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(admin.email))])
+                              ])
+                            })
+                      ],
+                      2
+                    )
+                  ])
+                ])
+              ])
+            ])
+          ]
+        )
       ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "modal", attrs: { id: "showUserModal" } }, [
       _c("div", { staticClass: "modal-content" }, [
         _vm.user.length < 1
-          ? _c("div", { staticClass: "center-align" }, [_vm._m(11)])
+          ? _c("div", { staticClass: "center-align" }, [_vm._m(15)])
           : _c("div", [
               _c("h4", [_vm._v(_vm._s(_vm.user.name))]),
               _vm._v(" "),
@@ -40192,7 +40566,7 @@ var render = function() {
     _c("div", { staticClass: "modal", attrs: { id: "delUserModal" } }, [
       _c("div", { staticClass: "modal-content" }, [
         _vm.user.length < 1 || _vm.deleteUserReady
-          ? _c("div", { staticClass: "center-align" }, [_vm._m(12)])
+          ? _c("div", { staticClass: "center-align" }, [_vm._m(16)])
           : _c("div", [
               _c("div", { staticClass: "center-align" }, [
                 _c("h4", [_vm._v(_vm._s(_vm.user.name))]),
@@ -40225,7 +40599,7 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _vm._m(13)
+              _vm._m(17)
             ])
       ])
     ]),
@@ -40235,16 +40609,16 @@ var render = function() {
         _c("h4", [_vm._v("Deleted Users")]),
         _vm._v(" "),
         _vm.deletedUsersData || _vm.updateUserReady
-          ? _c("div", { staticClass: "center-align" }, [_vm._m(14)])
+          ? _c("div", { staticClass: "center-align" }, [_vm._m(18)])
           : _c("div", [
               _c("table", { staticClass: "highlight responsive-table" }, [
-                _vm._m(15),
+                _vm._m(19),
                 _vm._v(" "),
                 _c(
                   "tbody",
                   [
                     _vm.deletedUsers.length < 1
-                      ? _c("tr", [_vm._m(16)])
+                      ? _c("tr", [_vm._m(20)])
                       : _vm._l(_vm.deletedUsers, function(user, index) {
                           return _c("tr", { key: user.id }, [
                             _c("td", [_vm._v(_vm._s(index + 1))]),
@@ -40419,8 +40793,8 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "col s12 m12 l12 center-align" }, [
                   _vm.addClinic.name == "" || _vm.addClinic.address == ""
-                    ? _c("span", [_vm._m(17)])
-                    : _c("span", [_vm._m(18)])
+                    ? _c("span", [_vm._m(21)])
+                    : _c("span", [_vm._m(22)])
                 ])
               ])
             ]
@@ -40434,7 +40808,7 @@ var render = function() {
         _c("h4", [_vm._v("Edit Clinic")]),
         _vm._v(" "),
         _vm.updateClinicReady
-          ? _c("div", { staticClass: "center-align" }, [_vm._m(19)])
+          ? _c("div", { staticClass: "center-align" }, [_vm._m(23)])
           : _c("div", { staticClass: "row" }, [
               _c(
                 "form",
@@ -40570,7 +40944,7 @@ var render = function() {
                       domProps: { innerHTML: _vm._s(_vm.addClinicFeedback) }
                     }),
                     _vm._v(" "),
-                    _vm._m(20)
+                    _vm._m(24)
                   ])
                 ]
               )
@@ -40594,7 +40968,7 @@ var render = function() {
     _c("div", { staticClass: "modal", attrs: { id: "delClinicModal" } }, [
       _c("div", { staticClass: "modal-content" }, [
         _vm.clinic.length < 1 || _vm.deleteClinicReady
-          ? _c("div", { staticClass: "center-align" }, [_vm._m(21)])
+          ? _c("div", { staticClass: "center-align" }, [_vm._m(25)])
           : _c("div", [
               _c("div", { staticClass: "center-align" }, [
                 _c("h4", [_vm._v(_vm._s(_vm.clinic.name))]),
@@ -40625,7 +40999,7 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _vm._m(22)
+              _vm._m(26)
             ])
       ])
     ]),
@@ -40638,16 +41012,16 @@ var render = function() {
           _c("h4", [_vm._v("Deleted Clinics")]),
           _vm._v(" "),
           _vm.deletedClinicsData || _vm.updateClinicReady
-            ? _c("div", { staticClass: "center-align" }, [_vm._m(23)])
+            ? _c("div", { staticClass: "center-align" }, [_vm._m(27)])
             : _c("div", [
                 _c("table", { staticClass: "highlight responsive-table" }, [
-                  _vm._m(24),
+                  _vm._m(28),
                   _vm._v(" "),
                   _c(
                     "tbody",
                     [
                       _vm.deletedClinics.length < 1
-                        ? _c("tr", [_vm._m(25)])
+                        ? _c("tr", [_vm._m(29)])
                         : _vm._l(_vm.deletedClinics, function(clinic, index) {
                             return _c("tr", { key: clinic.id }, [
                               _c("td", [_vm._v(_vm._s(index + 1))]),
@@ -41762,8 +42136,8 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "col s12 m12 l12 center-align" }, [
                 !_vm.addAlgo.actionType
-                  ? _c("span", [_vm._m(26)])
-                  : _c("span", [_vm._m(27)])
+                  ? _c("span", [_vm._m(30)])
+                  : _c("span", [_vm._m(31)])
               ])
             ]
           )
@@ -41774,7 +42148,7 @@ var render = function() {
     _c("div", { staticClass: "modal", attrs: { id: "showAlgoModal" } }, [
       _c("div", { staticClass: "modal-content" }, [
         _vm.algo.length < 1
-          ? _c("div", { staticClass: "center-align" }, [_vm._m(28)])
+          ? _c("div", { staticClass: "center-align" }, [_vm._m(32)])
           : _c("div", [
               _c("div", { staticClass: "row" }, [
                 _vm.algo.text == "Empty"
@@ -41796,7 +42170,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("div", { staticClass: "col l6 m6 s12" }, [
                         _c("div", { staticClass: "input-field" }, [
-                          _vm._m(29),
+                          _vm._m(33),
                           _vm._v(" "),
                           _c(
                             "select",
@@ -41936,7 +42310,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("div", { staticClass: "col l6 m6 s12" }, [
                         _c("div", { staticClass: "input-field" }, [
-                          _vm._m(30),
+                          _vm._m(34),
                           _vm._v(" "),
                           _c(
                             "select",
@@ -42088,11 +42462,11 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c("div", { staticClass: "row" }, [
-                          _vm._m(31),
+                          _vm._m(35),
                           _vm._v(" "),
                           _c("div", { staticClass: "col l6 m12 s12" }, [
                             _c("div", { staticClass: "col l6 m6 s12" }, [
-                              _vm._m(32),
+                              _vm._m(36),
                               _vm._v(" "),
                               _c("input", {
                                 directives: [
@@ -42125,7 +42499,7 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("div", { staticClass: "col l6 m6 s12" }, [
-                              _vm._m(33),
+                              _vm._m(37),
                               _vm._v(" "),
                               _c("input", {
                                 directives: [
@@ -42162,7 +42536,7 @@ var render = function() {
                         _c("div", { staticClass: "row" }, [
                           _c("div", { staticClass: "col l6 m6 s12" }, [
                             _c("div", { staticClass: "input-field" }, [
-                              _vm._m(34),
+                              _vm._m(38),
                               _vm._v(" "),
                               _c(
                                 "select",
@@ -42398,7 +42772,7 @@ var render = function() {
                           _vm._v(" "),
                           _c("div", { staticClass: "col l6 m6 s12" }, [
                             _c("div", { staticClass: "input-field" }, [
-                              _vm._m(35),
+                              _vm._m(39),
                               _vm._v(" "),
                               _c(
                                 "select",
@@ -42647,7 +43021,7 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("div", { staticClass: "row" }, [
-                        _vm._m(36),
+                        _vm._m(40),
                         _vm._v(" "),
                         _c("div", { staticClass: "col l6 m12 s12" }, [
                           _c("div", { staticClass: "col s12" }, [
@@ -42743,7 +43117,7 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c("div", { staticClass: "row" }, [
-                          _vm._m(37),
+                          _vm._m(41),
                           _vm._v(" "),
                           _c("div", { staticClass: "col l6 m12 s12" }, [
                             _c("div", { staticClass: "col s12" }, [
@@ -42840,7 +43214,7 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c("div", { staticClass: "row" }, [
-                          _vm._m(38),
+                          _vm._m(42),
                           _vm._v(" "),
                           _c("div", { staticClass: "col l6 m12 s12" }, [
                             _c("div", { staticClass: "col s12" }, [
@@ -42927,9 +43301,256 @@ var render = function() {
               ]),
               _vm._v(" "),
               _vm.updateAlgoStatus
-                ? _c("div", { staticClass: "center-align" }, [_vm._m(39)])
+                ? _c("div", { staticClass: "center-align" }, [_vm._m(43)])
                 : _vm._e()
             ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "modal", attrs: { id: "showAddAdminModal" } }, [
+      _c("div", { staticClass: "modal-content" }, [
+        _c("h4", { staticClass: "center-align" }, [_vm._v("Add Admin")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c(
+            "form",
+            {
+              staticClass: "col s12",
+              attrs: { method: "POST" },
+              on: {
+                submit: function($event) {
+                  return _vm.addAdminOp($event)
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "input-field col s6" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.addAdmin.firstname,
+                        expression: "addAdmin.firstname"
+                      }
+                    ],
+                    staticClass: "validate",
+                    attrs: {
+                      placeholder: "First Name",
+                      type: "text",
+                      required: ""
+                    },
+                    domProps: { value: _vm.addAdmin.firstname },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.addAdmin, "firstname", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("label", { attrs: { for: "first_name" } }, [
+                    _vm._v("First Name")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-field col s6" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.addAdmin.lastname,
+                        expression: "addAdmin.lastname"
+                      }
+                    ],
+                    staticClass: "validate",
+                    attrs: {
+                      placeholder: "Last Name",
+                      type: "text",
+                      required: ""
+                    },
+                    domProps: { value: _vm.addAdmin.lastname },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.addAdmin, "lastname", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("label", { attrs: { for: "last_name" } }, [
+                    _vm._v("Last Name")
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "input-field col s6" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.addAdmin.phone,
+                        expression: "addAdmin.phone"
+                      }
+                    ],
+                    staticClass: "validate",
+                    attrs: {
+                      placeholder: "Phone Number",
+                      type: "text",
+                      required: ""
+                    },
+                    domProps: { value: _vm.addAdmin.phone },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.addAdmin, "phone", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("label", { attrs: { for: "first_name" } }, [
+                    _vm._v("Phone Number")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-field col s6" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.addAdmin.email,
+                        expression: "addAdmin.email"
+                      }
+                    ],
+                    staticClass: "validate",
+                    attrs: {
+                      placeholder: "E-Mail",
+                      type: "email",
+                      required: ""
+                    },
+                    domProps: { value: _vm.addAdmin.email },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.addAdmin, "email", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("label", { attrs: { for: "last_name" } }, [
+                    _vm._v("E-Mail")
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "input-field col s6" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.addAdmin.password,
+                        expression: "addAdmin.password"
+                      }
+                    ],
+                    staticClass: "validate",
+                    attrs: {
+                      placeholder: "Password",
+                      type: "password",
+                      required: ""
+                    },
+                    domProps: { value: _vm.addAdmin.password },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.addAdmin, "password", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("label", { attrs: { for: "password" } }, [
+                    _vm._v("Password")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-field col s6" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.addAdmin.cPassword,
+                        expression: "addAdmin.cPassword"
+                      }
+                    ],
+                    staticClass: "validate",
+                    attrs: {
+                      placeholder: "Confirm Password",
+                      type: "password",
+                      required: ""
+                    },
+                    domProps: { value: _vm.addAdmin.cPassword },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.addAdmin, "cPassword", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("label", { attrs: { for: "password" } }, [
+                    _vm._v("Confirm Password")
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col s12 m12 l12 center-align" }, [
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.adminAddAction,
+                        expression: "adminAddAction"
+                      }
+                    ],
+                    staticClass: "progress"
+                  },
+                  [_c("div", { staticClass: "indeterminate" })]
+                ),
+                _vm._v(" "),
+                !_vm.addAdmin.firstname ||
+                !_vm.addAdmin.lastname ||
+                !_vm.addAdmin.phone ||
+                !_vm.addAdmin.email ||
+                !_vm.addAdmin.password ||
+                !_vm.addAdmin.cPassword
+                  ? _c("span", [_vm._m(44)])
+                  : _c("span", [_vm._m(45)])
+              ])
+            ]
+          )
+        ])
       ])
     ])
   ])
@@ -42962,22 +43583,26 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "nav-content" }, [
-      _c("ul", { staticClass: "tabs tabs-transparent" }, [
-        _c("li", { staticClass: "tab" }, [
-          _c("a", { staticClass: "active", attrs: { href: "#users" } }, [
-            _vm._v("Users")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "tab" }, [
-          _c("a", { attrs: { href: "#clinics" } }, [_vm._v("Clinics")])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "tab" }, [
-          _c("a", { attrs: { href: "#algo" } }, [_vm._v("Algorithm")])
-        ])
+    return _c("li", { staticClass: "tab" }, [
+      _c("a", { staticClass: "active", attrs: { href: "#users" } }, [
+        _vm._v("Users")
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "tab" }, [
+      _c("a", { attrs: { href: "#clinics" } }, [_vm._v("Clinics")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "tab" }, [
+      _c("a", { attrs: { href: "#algo" } }, [_vm._v("Algorithm")])
     ])
   },
   function() {
@@ -43088,6 +43713,30 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("td", { staticClass: "center-align", attrs: { colspan: "9" } }, [
       _c("small", [_c("i", [_vm._v("No Algorithm.")])])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("S/N")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Active")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Names")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Email")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "center-align", attrs: { colspan: "9" } }, [
+      _c("small", [_c("i", [_vm._v("No Admin Account.")])])
     ])
   },
   function() {
@@ -43369,6 +44018,35 @@ var staticRenderFns = [
     return _c("div", { staticClass: "progress" }, [
       _c("div", { staticClass: "indeterminate" })
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      { staticClass: "btn waves-effect waves-light", attrs: { disabled: "" } },
+      [
+        _vm._v("Add\n                                "),
+        _c("i", { staticClass: "material-icons right" }, [_vm._v("add")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn waves-effect waves-light",
+        attrs: { type: "submit", name: "action" }
+      },
+      [
+        _vm._v("Add\n                                "),
+        _c("i", { staticClass: "material-icons right" }, [_vm._v("add")])
+      ]
+    )
   }
 ]
 render._withStripped = true

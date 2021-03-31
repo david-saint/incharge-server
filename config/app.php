@@ -56,8 +56,8 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
-    // 'api-domain' => env('API_DOMAIN', 'api.incharge.ga'),
-    'api-domain' => env('API_DOMAIN', '192.168.43.2'),
+    'api-domain' => env('API_DOMAIN', 'api.incharge.ga'),
+    // 'api-domain' => env('API_DOMAIN', '192.168.43.2'),
 
     'admin-domain' => env('ADMIN_URL', 'incharge-server.io'),
     
