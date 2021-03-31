@@ -17,6 +17,7 @@
                         <li class="tab"><a class="active" href="#users">Users</a></li>
                         <li class="tab"><a href="#clinics">Clinics</a></li>
                         <li class="tab"><a href="#algo">Algorithm</a></li>
+                        <li class="tab" v-show="adminUserType == 'Super'"><a href="#admin">Admin</a></li>
                     </ul>
                 </div>
             </div>            
@@ -244,6 +245,59 @@
                         </div>
                     </div>
                 </div>
+                <span v-show="adminUserType == 'Super'">
+                    <div id="admin" class="col s12">
+                        <h2>Admins</h2>
+                        <div class="row">
+                            <div class="col l12 m12 s12 borderedUD">
+                                <a href="#" data-target="showAddAdminModal" class="blue-text waves-effect waves-light btn-flat modal-trigger" @click="showAddAdminModal()">
+                                    <i class="material-icons left">add</i>Add Admin
+                                </a>
+                                <!-- <a href="#" data-target="showDeletedAdmin" class="blue-text waves-effect waves-light btn-flat modal-trigger right" @click="getDeletedAdmins()">
+                                    <i class="material-icons left">refresh</i>Reactivate Admin
+                                </a> -->
+                            </div>
+                            <div class="col l12 m12 s12">
+                                <table class="highlight responsive-table">
+                                    <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Active</th>
+                                        <th>Names</th>
+                                        <th>Email</th>
+                                    </tr>
+                                    </thead>
+                                    <div class="progress" v-show="adminVerifyAction">
+                                        <div class="indeterminate"></div>
+                                    </div>
+                                    <tbody>
+                                        <tr v-if="admins.length < 1">
+                                            <td colspan="9" class="center-align">
+                                                <small><i>No Admin Account.</i></small>
+                                            </td>
+                                        </tr>
+                                        <tr v-else v-for="(admin, index) in admins" :key="admin.id">
+                                            <td>{{index + 1}}</td>
+                                            <td>
+                                                <label v-if="admin.verified == 'Y'">
+                                                    <input type="checkbox" checked @change="toggleVerified(admin.id, $event)"/>
+                                                    <span></span>
+                                                </label>
+                                                <label v-else>
+                                                    <input type="checkbox" @change="toggleVerified(admin.id, $event)"/>
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                            <td>{{admin.firstname}} {{admin.lastname}}</td>
+                                            <td>{{admin.email}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+                
             </div>            
         </div>   
 
@@ -908,6 +962,64 @@
                 </div>
             </div>
         </div> 
+
+        <!-- ADMIN MODAL -->
+        <div id="showAddAdminModal" class="modal">
+            <div class="modal-content">
+                <h4 class="center-align">Add Admin</h4>
+                <div class="row">
+                    <form class="col s12" @submit="addAdminOp($event)" method="POST">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input placeholder="First Name" v-model="addAdmin.firstname" type="text" class="validate" required>
+                                <label for="first_name">First Name</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input placeholder="Last Name" v-model="addAdmin.lastname" type="text" class="validate" required>
+                                <label for="last_name">Last Name</label>
+                            </div>
+                        </div>   
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input placeholder="Phone Number" v-model="addAdmin.phone" type="text" class="validate" required>
+                                <label for="first_name">Phone Number</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input placeholder="E-Mail" v-model="addAdmin.email" type="email" class="validate" required>
+                                <label for="last_name">E-Mail</label>
+                            </div>
+                        </div>   
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input placeholder="Password" v-model="addAdmin.password" type="password" class="validate" required>
+                                <label for="password">Password</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input placeholder="Confirm Password" v-model="addAdmin.cPassword" type="password" class="validate" required>
+                                <label for="password">Confirm Password</label>
+                            </div>
+                            
+                        </div>
+                        <div class="col s12 m12 l12 center-align">
+                            <div class="progress" v-show="adminAddAction">
+                                    <div class="indeterminate"></div>
+                                </div>
+                            <span v-if="!addAdmin.firstname || !addAdmin.lastname || !addAdmin.phone || !addAdmin.email || !addAdmin.password || !addAdmin.cPassword">
+                                <button class="btn waves-effect waves-light" disabled>Add
+                                    <i class="material-icons right">add</i>
+                                </button>
+                            </span>
+                            <span v-else>
+                                <button class="btn waves-effect waves-light" type="submit" name="action">Add
+                                    <i class="material-icons right">add</i>
+                                </button>
+                            </span>                                
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -918,16 +1030,21 @@
                 adminNames: '',
                 adminId: 0,
                 adminUserToken: '',
+                adminUserType: '',
                 dataReady: false,
                 deleteUserReady: false,
                 updateUserReady: false,
                 updateAlgoStatus: false,
                 deleteClinicReady: false,
                 updateClinicReady: false,
+                adminVerifyAction: false,
+                adminAddAction: false,
                 users: [],
                 user: [],
                 clinics: [],
                 clinic: [],
+                admins: [],
+                admin: [],
                 eduLevel: [],
                 contraceptiveReason: [],
                 deletedUsers: [],
@@ -958,6 +1075,18 @@
                     from: 0,
                     to: 0
                 },
+                adminPagination: {
+                    path: '',
+                    currentPage: 0,
+                    lastPage: 0,
+                    firstPageUrl: '',
+                    prevPageUrl: '',
+                    nextPageUrl: '',
+                    lastPageUrl: '',
+                    total: 0,
+                    from: 0,
+                    to: 0
+                },
                 addClinic: {
                     name: "",
                     address: "",
@@ -967,6 +1096,7 @@
                 },
                 addClinicFeedback: '<small>Your current location will be saved as this clinics location. Please if it is not, locate it on the map above.</small>',
                 addAlgo: {},
+                addAdmin: {},
                 algos: [],
                 algo: [],
                 editAlgo: {
@@ -993,6 +1123,7 @@
                     this.getAlgo();
                     this.getEduLevel();
                     this.getContraReason();
+                    this.getAdmins();
                 }
             }, 1000);
             
@@ -1004,10 +1135,10 @@
                     this.adminId = res.data.id;
                     this.adminNames = res.data.firstname+' '+res.data.lastname;
                     this.adminUserToken = res.data.accessToken;
+                    this.adminUserType = res.data.userType;
                 });
             },
             getUsers(){
-                
                 axios.get("/api/v1/user/users").then(res => {
                     this.users = res.data.data;
                     this.pagination.currentPage = res.data.current_page;
@@ -1020,6 +1151,23 @@
                     this.pagination.path = res.data.path;
                     this.pagination.from = res.data.from;
                     this.pagination.to = res.data.to;
+                });
+            },
+            getAdmins(){
+                // allAdmins
+                axios.get("/allAdmins").then(res => {
+                    this.admins = res.data.data;
+                    
+                    this.adminPagination.currentPage = res.data.current_page;
+                    this.adminPagination.lastPage = res.data.last_page;
+                    this.adminPagination.firstPageUrl = res.data.first_page_url;
+                    this.adminPagination.prevPageUrl = res.data.prev_page_url;
+                    this.adminPagination.nextPageUrl = res.data.next_page_url;
+                    this.adminPagination.lastPageUrl = res.data.last_page_url;
+                    this.adminPagination.total = res.data.total;
+                    this.adminPagination.path = res.data.path;
+                    this.adminPagination.from = res.data.from;
+                    this.adminPagination.to = res.data.to;
                 });
             },
             getClinics(){
@@ -1155,11 +1303,13 @@
                 });
                 this.algo = algo[0];
                 this.editAlgo = this.algo;
-                console.log(this.editAlgo);
-                // this.editAlgo.onPositive = this.algo.onPositive;
-                // this.editAlgo.onNegative = this.algo.onNegative;
-                // this.editAlgo.positive = this.algo.positive;
-                // this.editAlgo.negative = this.algo.negative;
+            },
+            showAddAdminModal(id){
+                this.admin = [];
+                let admin = this.admins.filter(function(admin) {
+                    return admin.id == id;
+                });
+                this.admin = admin[0];
             },
             updateAlog(algoId, updateType){
                 this.updateAlgoStatus = true;
@@ -1216,6 +1366,27 @@
                 }
                 this.algoUpdateAPI(algoId, data);
             },
+            toggleVerified(adminId, e){
+                this.adminVerifyAction = true;
+                let data;
+                if(e.target.checked){
+                    data = {
+                        verified: 'Y'
+                    }
+                } else {
+                    data = {
+                        verified: 'N'
+                    }
+                }
+                axios.put("/admin/"+adminId, data).then(res => {
+                    if(res.status == 200){
+                        M.toast({html: 'Admin verification action complete.'});
+                    } else {
+                        M.toast({html: 'Admin not verified.', classes: 'error'});
+                    }
+                    this.adminVerifyAction = false;
+                });
+            },
             algoUpdateAPI(algoId, data){
                 axios.put("/api/v1/admin/algo/"+algoId, data).then(res => {
                     if(res.status == 200){
@@ -1265,6 +1436,36 @@
                 .catch(err => {
                     console.log(err);
                 });
+            },
+            addAdminOp(e){
+                this.adminAddAction = true;
+                e.preventDefault();
+                let config = {
+                    headers: { Authorization: "Bearer " + this.adminUserToken }
+                };
+
+                if(this.addAdmin.password != this.addAdmin.cPassword){
+                    M.toast({html: "Passwords do not match", classes: 'error'});
+                    this.adminAddAction = false;
+                } else {
+                    this.addAdmin.verified = 'N';
+                    this.addAdmin.userType =  'Sub';
+
+                    axios
+                    .post("/admin", this.addAdmin, config)
+                    .then(res => {                        
+                        if (res.status == 200) {
+                            location.reload();
+                        } else {
+                            M.toast({html: "Admin not added", classes: 'error'});
+                        }
+                        this.adminAddAction = false;
+                    })
+                    .catch(err => {
+                        M.toast({html: "Error! Please ensure you are not trying to create a duplicate admin account. Try again later", classes: 'error'});
+                    });
+                }
+                
             },
             getDeletedUsers(){
                 this.deletedUsersData = true;
