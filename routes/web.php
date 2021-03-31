@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,3 +18,10 @@ Route::get('/', function () {
 Route::get('/privacy', function () {
 	return view('privacy-policy');
 });
+
+Route::resource('/admin', 'AdminController');
+Route::get('/loginView', 'AdminController@loginView');
+Route::get('/panel', 'AdminController@panel');
+Route::get('/getAdminDet', 'AdminController@getAdminDet');
+Route::get('/logout', 'AdminController@logout');	
+Route::post('/login', 'AdminController@login');

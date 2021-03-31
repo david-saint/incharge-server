@@ -2962,7 +2962,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.dataReady = true;
-      axios.get("/api/v1/admin/getAdminDet").then(function (res) {
+      axios.get("/getAdminDet").then(function (res) {
         _this2.adminId = res.data.id;
         _this2.adminNames = res.data.firstname + ' ' + res.data.lastname;
         _this2.adminUserToken = res.data.accessToken;
@@ -3528,9 +3528,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     loginAdmin: function loginAdmin(e) {
       e.preventDefault();
-      axios.post("/api/v1/admin/login", this.login).then(function (res) {
+      axios.post("/login", this.login).then(function (res) {
         if (res.data == 200) {
-          window.location.replace("/api/v1/admin/panel");
+          window.location.replace("/panel");
         } else if (res.data == 501) {
           M.toast({
             html: 'Invalid Email/Password or unverified account',
@@ -3627,9 +3627,9 @@ __webpack_require__.r(__webpack_exports__);
       e.preventDefault();
 
       if (this.add.password == this.add.cPassword) {
-        axios.post("/api/v1/admin", this.add).then(function (res) {
+        axios.post("/admin", this.add).then(function (res) {
           if (res.data == 200) {
-            window.location.replace("/api/v1/admin");
+            window.location.replace("/admin");
           } else {
             M.toast({
               html: 'Error. Please try again',
@@ -42942,13 +42942,7 @@ var staticRenderFns = [
     return _c(
       "ul",
       { staticClass: "dropdown-content", attrs: { id: "adminDropdown" } },
-      [
-        _c("li", [
-          _c("a", { attrs: { href: "/api/v1/admin/logout" } }, [
-            _vm._v("Logout")
-          ])
-        ])
-      ]
+      [_c("li", [_c("a", { attrs: { href: "/logout" } }, [_vm._v("Logout")])])]
     )
   },
   function() {
@@ -56275,8 +56269,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\incharge-server\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\incharge-server\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\api.incharge-server\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\api.incharge-server\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

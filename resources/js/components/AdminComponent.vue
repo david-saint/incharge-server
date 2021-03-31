@@ -1,7 +1,7 @@
 <template>
     <div>
         <ul id="adminDropdown" class="dropdown-content">
-            <li><a href="/api/v1/admin/logout">Logout</a></li>
+            <li><a href="/logout">Logout</a></li>
         </ul>
         <nav class="nav-extended">
             <div class="container">
@@ -1000,7 +1000,7 @@
         methods: {
             getAdminDetails(){
                 this.dataReady = true;
-                axios.get("/api/v1/admin/getAdminDet").then(res => {
+                axios.get("/getAdminDet").then(res => {
                     this.adminId = res.data.id;
                     this.adminNames = res.data.firstname+' '+res.data.lastname;
                     this.adminUserToken = res.data.accessToken;

@@ -49,10 +49,10 @@
                 e.preventDefault();
                 
                 axios
-                .post("/api/v1/admin/login", this.login)
+                .post("/login", this.login)
                 .then(res => {
                     if(res.data == 200){
-                        window.location.replace("/api/v1/admin/panel");
+                        window.location.replace("/panel");
                     } else if(res.data == 501){
                         M.toast({html: 'Invalid Email/Password or unverified account', classes: 'error'});
                     }
