@@ -1,6 +1,6 @@
 <?php
 
-
+use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Admin Routes
@@ -13,7 +13,6 @@
 */
 
 Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
-	// Route::resource('', 'AdminController');
-	Route::resource('algo', 'AlgorithmController');
-	Route::get('algorithm', 'AlgorithmController@algoJSON');
+	
+	
 });

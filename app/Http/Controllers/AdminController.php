@@ -1,7 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\User;
+use App\Models\Clinic;
 use App\Models\Admin;
+use App\Models\EducationLevel;
+use App\Http\Resources\General\GenericNamedResource;
+use App\Models\ContraceptionReason;
+use App\Http\Resources\General\ContraceptionReasonResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -9,6 +15,12 @@ use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
+    public function __construct() {
+        $this->middleware('isAdmin', ['except' => [
+            'index', 'login', 'store', 'logout', 'loginView', 'panel'
+        ]]);
+    }
+    
     public function index()
     {
         $superAdmin = Admin::where('userType', '=', 'Super')->get();
@@ -18,10 +30,103 @@ class AdminController extends Controller
             return view('admin/regSuperUser');
         }
     }
+    public function allUsers()
+    {
+        $users = User::with('profile', 'profile.educationLevel', 'profile.reason')->paginate(50);
+        return response()->json($users, 200);   
+    }
+    public function deletedUser(){
+        $users = User::onlyTrashed()->get();
+        return response()->json($users, 200);  
+    }
+    public function revertDeletedUser($id)
+    {
+        $clinic = User::withTrashed()->find($id)->restore();
+        if($clinic){
+            return response()->json('restored', 200);
+        } else {
+            return response()->json('not restored', 501);
+        }
+    }
+    public function deleteUser($id)
+    {
+        $user = User::findOrFail($id);
+        $res = $user->delete();
+        
+        if($res == 1){
+            return response()->json('Done', 200);
+        } else {
+            return response()->json('Not done', 501);
+        }
+    }
+    public function deleteClinic($id)
+    {
+        $user = Clinic::findOrFail($id);
+        $res = $user->delete();
+        
+        if($res == 1){
+            return response()->json('Done', 200);
+        } else {
+            return response()->json('Not done', 501);
+        }
+    }
+    public function revertDeletedClinic($id)
+    {
+        $clinic = Clinic::withTrashed()->find($id)->restore();
+        if($clinic){
+            return response()->json('restored', 200);
+        } else {
+            return response()->json('not restored', 501);
+        }
+    }
+    public function allClinics()
+    {
+        $clinics = Clinic::paginate(50);
+        return response()->json($clinics, 200);   
+    }
+    public function addClinic(Request $request)
+    {
+        $request->validate([
+            'name' => ['required','string'],
+            'address' => ['required','string'],
+            'latitude' => ['required','numeric'],
+            'longitude' => ['required','numeric'],
+            'added_by_id' => ['required','numeric']
+        ]);
+        
+        $clinic = Clinic::create($request->all());
+        if($clinic){
+            return response()->json('done', 201);
+        }
+    }
+    public function updateClinic(Request $request, $id)
+    {
+        $clinic = Clinic::findOrFail($id);
+        $res = $clinic->update($request->only('name', 'address', 'latitude', 'longitude', 'added_by_id'));
+        if($res){
+            return response()->json('Updated', 200);
+        } else {
+            return response()->json('Not Updated', 501);
+        }
+    }
+    public function deletedClinics(){
+        $clinics = Clinic::onlyTrashed()->get();
+        return response()->json($clinics, 200);  
+    }
+    public function eduLevel()
+	{
+		$el = EducationLevel::all();
+
+		return GenericNamedResource::collection($el);
+	}
+    public function contraceptionReasons()
+    {
+        $cr = ContraceptionReason::all();
+
+        return ContraceptionReasonResource::collection($cr);
+    }
     public function getAdminDet(){
-        if(Auth()->check()){
-            return Auth()->user();
-        } 
+        return Auth()->user();
     }
     public function panel()
     {

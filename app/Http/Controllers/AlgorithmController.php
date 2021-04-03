@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\V1\Admin;
+namespace App\Http\Controllers;
 
 use App\Models\Algorithm;
 use App\Models\User;
@@ -9,6 +9,9 @@ use App\Http\Controllers\Controller;
 
 class AlgorithmController extends Controller
 {
+    public function __construct() {
+        $this->middleware('isAdmin');
+    }
     /**
      * Display a listing of the resource.
      *

@@ -22,13 +22,13 @@
         <div id="app">
             <admin-component></admin-component>
         </div>
-
+        <script src="{{ asset('js/app.js') }}"></script>    
         <script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
         <script src="{{ asset('js/materialize.min.js') }}"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN_xNkP9PnYMSLth9l9rfzoqUtFEvUAwA&libraries=&v=weekly" async></script>
         <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key="></script> callback=initMap&-->
         <script src="{{ asset('js/incharge.js') }}"></script>  
-        <script src="{{ asset('js/app.js') }}"></script>        
+            
         
     </body>
 </html>
