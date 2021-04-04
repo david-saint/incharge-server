@@ -1,7 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\User;
+use App\Models\Clinic;
 use App\Models\Admin;
+use App\Models\EducationLevel;
+use App\Http\Resources\General\GenericNamedResource;
+use App\Models\ContraceptionReason;
+use App\Http\Resources\General\ContraceptionReasonResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -9,6 +15,12 @@ use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
+    public function __construct() {
+        $this->middleware('isAdmin', ['except' => [
+            'index', 'login', 'store', 'logout', 'loginView', 'panel'
+        ]]);
+    }
+    
     public function index()
     {
         $superAdmin = Admin::where('userType', '=', 'Super')->get();
@@ -18,10 +30,9 @@ class AdminController extends Controller
             return view('admin/regSuperUser');
         }
     }
+    
     public function getAdminDet(){
-        if(Auth()->check()){
-            return Auth()->user();
-        } 
+        return Auth()->user();
     }
     public function panel()
     {

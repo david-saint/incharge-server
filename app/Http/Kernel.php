@@ -66,6 +66,8 @@ class Kernel extends HttpKernel
         'user' => \App\Http\Middleware\UserMiddleware::class,
         'guard' => \App\Http\Middleware\Guard::class,
         'force' => \App\Http\Middleware\ForceGuardLogin::class,
+        'isAdmin' => \App\Http\Middleware\IsAdmin::class,
+        'isLoggedIn' => \App\Http\Middleware\isLoggedIn::class,
     ];
 
     /**

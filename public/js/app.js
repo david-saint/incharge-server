@@ -2980,9 +2980,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      apiUrl: 'https://api.incharge.ga/api/v1',
+      //'http://192.168.43.2/api/v1',
       adminNames: '',
       adminId: 0,
       adminUserToken: '',
@@ -2995,6 +3001,7 @@ __webpack_require__.r(__webpack_exports__);
       updateClinicReady: false,
       adminVerifyAction: false,
       adminAddAction: false,
+      userDetailReady: false,
       users: [],
       user: [],
       clinics: [],
@@ -3067,13 +3074,10 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    M.AutoInit();
     this.getAdminDetails();
     var checkToken = setInterval(function () {
       if (_this.adminId) {
-        clearInterval(checkToken); // let config = {
-        //     headers: { Authorization: "Bearer " + this.adminUserToken }
-        // };
+        clearInterval(checkToken);
 
         _this.getUsers();
 
@@ -3104,7 +3108,7 @@ __webpack_require__.r(__webpack_exports__);
     getUsers: function getUsers() {
       var _this3 = this;
 
-      axios.get("/api/v1/user/users").then(function (res) {
+      axios.get(this.apiUrl + "/user/users").then(function (res) {
         _this3.users = res.data.data;
         _this3.pagination.currentPage = res.data.current_page;
         _this3.pagination.lastPage = res.data.last_page;
@@ -3140,7 +3144,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this5 = this;
 
       // this.dataReady = true;
-      axios.get("/api/v1/user/clinics/getClinics").then(function (res) {
+      axios.get(this.apiUrl + "/user/clinics/getClinics").then(function (res) {
         _this5.clinics = res.data.data;
         _this5.clinicPagination.currentPage = res.data.current_page;
         _this5.clinicPagination.lastPage = res.data.last_page;
@@ -3157,21 +3161,21 @@ __webpack_require__.r(__webpack_exports__);
     getAlgo: function getAlgo() {
       var _this6 = this;
 
-      axios.get("/api/v1/admin/algo").then(function (res) {
+      axios.get("/algo").then(function (res) {
         _this6.algos = res.data;
       });
     },
     getEduLevel: function getEduLevel() {
       var _this7 = this;
 
-      axios.get("/api/v1/global/education-levels").then(function (res) {
+      axios.get(this.apiUrl + "/global/education-levels").then(function (res) {
         _this7.eduLevel = res.data;
       });
     },
     getContraReason: function getContraReason() {
       var _this8 = this;
 
-      axios.get("/api/v1/global/contraception-reasons").then(function (res) {
+      axios.get(this.apiUrl + "/global/contraception-reasons").then(function (res) {
         _this8.contraceptiveReason = res.data;
         _this8.dataReady = false;
       });
@@ -3355,7 +3359,7 @@ __webpack_require__.r(__webpack_exports__);
         };
       }
 
-      axios.put("/admin/" + adminId, data).then(function (res) {
+      axios.put("/updateAdmin/" + adminId, data).then(function (res) {
         if (res.status == 200) {
           M.toast({
             html: 'Admin verification action complete.'
@@ -3373,7 +3377,7 @@ __webpack_require__.r(__webpack_exports__);
     algoUpdateAPI: function algoUpdateAPI(algoId, data) {
       var _this12 = this;
 
-      axios.put("/api/v1/admin/algo/" + algoId, data).then(function (res) {
+      axios.put("/algo/" + algoId, data).then(function (res) {
         if (res.status == 200) {
           _this12.algos.forEach(function (alg, i) {
             if (alg.id == res.data.id) {
@@ -3395,7 +3399,7 @@ __webpack_require__.r(__webpack_exports__);
 
       e.preventDefault();
       this.updateClinicReady = true;
-      axios.put("/api/v1/user/clinics/update/" + this.clinic.id, this.clinic).then(function (res) {
+      axios.put(this.apiUrl + "/user/clinics/update/" + this.clinic.id, this.clinic).then(function (res) {
         if (res.status == 200) {
           location.reload();
         } else {
@@ -3416,7 +3420,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       };
       this.addClinic.added_by_id = this.adminId;
-      axios.post("/api/v1/user/clinics/addClinic", this.addClinic, config).then(function (res) {
+      axios.post(this.apiUrl + "/user/clinics/addClinic", this.addClinic, config).then(function (res) {
         if (res.status == 201) {
           location.reload();
         } else {
@@ -3472,7 +3476,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this15 = this;
 
       this.deletedUsersData = true;
-      axios.get("/api/v1/user/users/deletedUser").then(function (res) {
+      axios.get(this.apiUrl + "/user/users/deletedUser").then(function (res) {
         _this15.deletedUsers = res.data;
         _this15.deletedUsersData = false;
       });
@@ -3481,7 +3485,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this16 = this;
 
       this.deletedClinicsData = true;
-      axios.get("/api/v1/user/clinics/deletedClinics").then(function (res) {
+      axios.get(this.apiUrl + "/user/clinics/deletedClinics").then(function (res) {
         _this16.deletedClinics = res.data;
         _this16.deletedClinicsData = false;
       });
@@ -3492,6 +3496,8 @@ __webpack_require__.r(__webpack_exports__);
         return user.id == id;
       });
       this.user = user[0];
+      this.userDetailReady = true;
+      $('#showUserModal').modal('open');
     },
     delUserDetails: function delUserDetails(id) {
       this.user = [];
@@ -3530,7 +3536,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this17 = this;
 
       this.deleteUserReady = true;
-      axios["delete"]("/api/v1/user/users/deleteUser/" + id).then(function (res) {
+      axios["delete"](this.apiUrl + "/user/users/deleteUser/" + id).then(function (res) {
         if (res.status == 200) {
           location.reload();
         } else {
@@ -3547,7 +3553,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this18 = this;
 
       this.deleteClinicReady = true;
-      axios["delete"]("/api/v1/user/clinics/deleteClinic/" + id).then(function (res) {
+      axios["delete"](this.apiUrl + "/user/clinics/deleteClinic/" + id).then(function (res) {
         if (res.status == 200) {
           location.reload();
         } else {
@@ -3567,12 +3573,12 @@ __webpack_require__.r(__webpack_exports__);
       var data = {
         deleted_at: null
       };
-      axios.put("/api/v1/user/users/update/" + id, data).then(function (res) {
+      axios.put(this.apiUrl + "/user/users/update/" + id, data).then(function (res) {
         if (res.status == 200) {
           location.reload();
         } else {
           M.toast({
-            html: 'Clinic not restored.',
+            html: 'User not restored.',
             classes: 'error'
           });
         }
@@ -3587,7 +3593,7 @@ __webpack_require__.r(__webpack_exports__);
       var data = {
         deleted_at: null
       };
-      axios.put("/api/v1/user/clinics/revertDelete/" + id, data).then(function (res) {
+      axios.put(this.apiUrl + "/user/clinics/revertDelete/" + id, data).then(function (res) {
         if (res.status == 200) {
           location.reload();
         } else {
@@ -3674,7 +3680,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
 
-      axios.post("/api/v1/admin/algo", this.addAlgo, config).then(function (res) {
+      axios.post("/algo", this.addAlgo, config).then(function (res) {
         if (res.status == 201) {
           location.reload();
         } else {
@@ -39670,14 +39676,13 @@ var render = function() {
                                     _c(
                                       "a",
                                       {
-                                        staticClass: "modal-trigger",
-                                        attrs: {
-                                          href: "#",
-                                          "data-target": "showUserModal"
-                                        },
+                                        attrs: { href: "#" },
                                         on: {
                                           click: function($event) {
-                                            return _vm.showUserDetails(user.id)
+                                            return _vm.showUserDetails(
+                                              user.id,
+                                              $event
+                                            )
                                           }
                                         }
                                       },
@@ -40271,7 +40276,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "col s12", attrs: { id: "admin" } }, [
-              _c("h2", [_vm._v("Admins")]),
+              _c("h2", [_vm._v("Admin")]),
               _vm._v(" "),
               _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "col l12 m12 s12 borderedUD" }, [
@@ -40326,39 +40331,47 @@ var render = function() {
                                 _c("td", [_vm._v(_vm._s(index + 1))]),
                                 _vm._v(" "),
                                 _c("td", [
-                                  admin.verified == "Y"
-                                    ? _c("label", [
-                                        _c("input", {
-                                          attrs: {
-                                            type: "checkbox",
-                                            checked: ""
-                                          },
-                                          on: {
-                                            change: function($event) {
-                                              return _vm.toggleVerified(
-                                                admin.id,
-                                                $event
-                                              )
-                                            }
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c("span")
+                                  admin.userType == "Super"
+                                    ? _c("span", [
+                                        _vm._v(
+                                          "\n                                                Super User\n                                            "
+                                        )
                                       ])
-                                    : _c("label", [
-                                        _c("input", {
-                                          attrs: { type: "checkbox" },
-                                          on: {
-                                            change: function($event) {
-                                              return _vm.toggleVerified(
-                                                admin.id,
-                                                $event
-                                              )
-                                            }
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c("span")
+                                    : _c("span", [
+                                        admin.verified == "Y"
+                                          ? _c("label", [
+                                              _c("input", {
+                                                attrs: {
+                                                  type: "checkbox",
+                                                  checked: ""
+                                                },
+                                                on: {
+                                                  change: function($event) {
+                                                    return _vm.toggleVerified(
+                                                      admin.id,
+                                                      $event
+                                                    )
+                                                  }
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("span")
+                                            ])
+                                          : _c("label", [
+                                              _c("input", {
+                                                attrs: { type: "checkbox" },
+                                                on: {
+                                                  change: function($event) {
+                                                    return _vm.toggleVerified(
+                                                      admin.id,
+                                                      $event
+                                                    )
+                                                  }
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("span")
+                                            ])
                                       ])
                                 ]),
                                 _vm._v(" "),
@@ -40387,7 +40400,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "modal", attrs: { id: "showUserModal" } }, [
       _c("div", { staticClass: "modal-content" }, [
-        _vm.user.length < 1
+        !_vm.userDetailReady
           ? _c("div", { staticClass: "center-align" }, [_vm._m(15)])
           : _c("div", [
               _c("h4", [_vm._v(_vm._s(_vm.user.name))]),
@@ -40398,7 +40411,8 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user.profile.gender) + "\n                    "
+                    _vm._s(_vm.user["profile"]["gender"]) +
+                      "\n                    "
                   )
                 ]),
                 _vm._v(" "),
@@ -40407,7 +40421,8 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user.profile.age) + "\n                    "
+                    _vm._s(_vm.user["profile"]["age"]) +
+                      "\n                    "
                   )
                 ]),
                 _vm._v(" "),
@@ -40432,7 +40447,8 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user.profile.address) + "\n                    "
+                    _vm._s(_vm.user["profile"]["address"]) +
+                      "\n                    "
                   )
                 ]),
                 _vm._v(" "),
@@ -40441,7 +40457,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user.profile.education_level.name) +
+                    _vm._s(_vm.user["profile"]["education_level"]["name"]) +
                       "\n                        \n                    "
                   )
                 ])
@@ -40453,7 +40469,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user.profile.marital_status) +
+                    _vm._s(_vm.user["profile"]["marital_status"]) +
                       "\n                    "
                   )
                 ]),
@@ -40463,7 +40479,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user.profile.sexually_active) +
+                    _vm._s(_vm.user["profile"]["sexually_active"]) +
                       "\n                    "
                   )
                 ]),
@@ -40473,7 +40489,8 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user.profile.height) + "\n                    "
+                    _vm._s(_vm.user["profile"]["height"]) +
+                      "\n                    "
                   )
                 ]),
                 _vm._v(" "),
@@ -40482,7 +40499,8 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user.profile.weight) + "\n                    "
+                    _vm._s(_vm.user["profile"]["weight"]) +
+                      "\n                    "
                   )
                 ])
               ]),
@@ -40493,7 +40511,8 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user.profile.religion) + "\n                    "
+                    _vm._s(_vm.user["profile"]["religion"]) +
+                      "\n                    "
                   )
                 ]),
                 _vm._v(" "),
@@ -40502,7 +40521,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user.profile.religion_sect) +
+                    _vm._s(_vm.user["profile"]["religion_sect"]) +
                       "\n                    "
                   )
                 ]),
@@ -40512,7 +40531,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user.profile.number_of_children) +
+                    _vm._s(_vm.user["profile"]["number_of_children"]) +
                       "\n                    "
                   )
                 ]),
@@ -40522,7 +40541,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user.profile.occupation) +
+                    _vm._s(_vm.user["profile"]["occupation"]) +
                       "\n                    "
                   )
                 ])
@@ -40534,17 +40553,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user.profile.pregnancy_status) +
-                      "\n                    "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col l4 m6 s6" }, [
-                  _c("b", [_vm._v("Contraceptive Reason:")]),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(
-                    _vm._s(_vm.user.profile.reason.value) +
+                    _vm._s(_vm.user["profile"]["pregnancy_status"]) +
                       "\n                    "
                   )
                 ]),
@@ -40554,7 +40563,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user.profile.meta.contraceptive_plan) +
+                    _vm._s(_vm.user["profile"]["meta"]["contraceptive_plan"]) +
                       "\n                    "
                   )
                 ])

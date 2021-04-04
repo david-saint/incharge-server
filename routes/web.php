@@ -19,10 +19,18 @@ Route::get('/privacy', function () {
 	return view('privacy-policy');
 });
 
-Route::resource('/admin', 'AdminController');
-Route::get('/allAdmins', 'AdminController@allAdmins');
+// Routes for ADMIN AUTH
 Route::get('/loginView', 'AdminController@loginView');
-Route::get('/panel', 'AdminController@panel');
-Route::get('/getAdminDet', 'AdminController@getAdminDet');
 Route::get('/logout', 'AdminController@logout');	
 Route::post('/login', 'AdminController@login');
+Route::get('/panel', 'AdminController@panel');
+
+// Routes for managing sub-admins on the admin panel
+Route::resource('/admin', 'AdminController');
+Route::get('/allAdmins', 'AdminController@allAdmins');
+Route::get('/getAdminDet', 'AdminController@getAdminDet');
+Route::put('updateAdmin/{admin_id}', 'AdminController@update');
+
+// Routes for managing Algorithm on the admin panel
+Route::resource('/algo', 'AlgorithmController');
+

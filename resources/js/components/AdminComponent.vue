@@ -73,7 +73,7 @@
                                             <td>{{user.profile.gender}}</td>
                                             <td>{{user.phone}}</td>
                                             <td>
-                                                <a href="#" data-target="showUserModal" class="modal-trigger" @click="showUserDetails(user.id)"><i class="material-icons">visibility</i></a>
+                                                <a href="#" @click="showUserDetails(user.id, $event)"><i class="material-icons">visibility</i></a>
                                                 
                                                 <a href="#" data-target="delUserModal" class="red-text modal-trigger" @click="delUserDetails(user.id)"><i class="material-icons">delete</i></a>
                                             </td>
@@ -247,7 +247,7 @@
                 </div>
                 <span v-show="adminUserType == 'Super'">
                     <div id="admin" class="col s12">
-                        <h2>Admins</h2>
+                        <h2>Admin</h2>
                         <div class="row">
                             <div class="col l12 m12 s12 borderedUD">
                                 <a href="#" data-target="showAddAdminModal" class="blue-text waves-effect waves-light btn-flat modal-trigger" @click="showAddAdminModal()">
@@ -277,19 +277,26 @@
                                             </td>
                                         </tr>
                                         <tr v-else v-for="(admin, index) in admins" :key="admin.id">
+                                            
                                             <td>{{index + 1}}</td>
                                             <td>
-                                                <label v-if="admin.verified == 'Y'">
-                                                    <input type="checkbox" checked @change="toggleVerified(admin.id, $event)"/>
-                                                    <span></span>
-                                                </label>
-                                                <label v-else>
-                                                    <input type="checkbox" @change="toggleVerified(admin.id, $event)"/>
-                                                    <span></span>
-                                                </label>
+                                                <span v-if="admin.userType == 'Super'">
+                                                    Super User
+                                                </span>
+                                                <span v-else>
+                                                    <label v-if="admin.verified == 'Y'">
+                                                        <input type="checkbox" checked @change="toggleVerified(admin.id, $event)"/>
+                                                        <span></span>
+                                                    </label>
+                                                    <label v-else>
+                                                        <input type="checkbox" @change="toggleVerified(admin.id, $event)"/>
+                                                        <span></span>
+                                                    </label>
+                                                </span>                                                
                                             </td>
                                             <td>{{admin.firstname}} {{admin.lastname}}</td>
                                             <td>{{admin.email}}</td>
+
                                         </tr>
                                     </tbody>
                                 </table>
@@ -304,7 +311,7 @@
         <!-- USER MODAL -->
         <div id="showUserModal" class="modal">
             <div class="modal-content">
-                <div class="center-align" v-if="user.length < 1">
+                <div class="center-align" v-if="!userDetailReady">
                     <div class="progress">
                         <div class="indeterminate"></div>
                     </div>
@@ -313,10 +320,10 @@
                     <h4>{{user.name}}</h4>
                     <div class="row">
                         <div class="col l3 m6 s6">
-                            <b>Gender:</b> <br>{{user.profile.gender}}
+                            <b>Gender:</b> <br>{{user['profile']['gender']}}
                         </div>
                         <div class="col l3 m6 s6">
-                            <b>Age:</b> <br>{{user.profile.age}}
+                            <b>Age:</b> <br>{{user['profile']['age']}}
                         </div>
                         <div class="col l3 m6 s6">
                             <b>Phone:</b> <br>{{user.phone}}
@@ -327,50 +334,47 @@
                     </div>
                     <div class="row">
                         <div class="col l6 m6 s6">
-                            <b>Address:</b> <br>{{user.profile.address}}
+                            <b>Address:</b> <br>{{user['profile']['address']}}
                         </div>
                         <div class="col l6 m6 s6">
-                            <b>Educational Level:</b> <br>{{user.profile.education_level.name}}
+                            <b>Educational Level:</b> <br>{{user['profile']['education_level']['name']}}
                             
                         </div>
                     </div>
-                    <div class="row">
+                     <div class="row">
                         <div class="col l3 m6 s6">
-                            <b>Marital:</b> <br>{{user.profile.marital_status}}
+                            <b>Marital:</b> <br>{{user['profile']['marital_status']}}
                         </div>
                         <div class="col l3 m6 s6">
-                            <b>Sexual:</b> <br>{{user.profile.sexually_active}}
+                            <b>Sexual:</b> <br>{{user['profile']['sexually_active']}}
                         </div>
                         <div class="col l3 m6 s6">
-                            <b>Height:</b> <br>{{user.profile.height}}
+                            <b>Height:</b> <br>{{user['profile']['height']}}
                         </div>
                         <div class="col l3 m6 s6">
-                            <b>Weight:</b> <br>{{user.profile.weight}}
+                            <b>Weight:</b> <br>{{user['profile']['weight']}}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col l3 m6 s6">
-                            <b>Religion:</b> <br>{{user.profile.religion}}
+                            <b>Religion:</b> <br>{{user['profile']['religion']}}
                         </div>
                         <div class="col l3 m6 s6">
-                            <b>Sect:</b> <br>{{user.profile.religion_sect}}
+                            <b>Sect:</b> <br>{{user['profile']['religion_sect']}}
                         </div>
                         <div class="col l3 m6 s6">
-                            <b>Children:</b> <br>{{user.profile.number_of_children}}
+                            <b>Children:</b> <br>{{user['profile']['number_of_children']}}
                         </div>
                         <div class="col l3 m6 s6">
-                            <b>Occupation:</b> <br>{{user.profile.occupation}}
+                            <b>Occupation:</b> <br>{{user['profile']['occupation']}}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col l4 m6 s6">
-                            <b>Pregnant:</b> <br>{{user.profile.pregnancy_status}}
-                        </div>
-                        <div class="col l4 m6 s6">
-                            <b>Contraceptive Reason:</b> <br>{{user.profile.reason.value}}
+                            <b>Pregnant:</b> <br>{{user['profile']['pregnancy_status']}}
                         </div>
                         <div class="col l4 m6 s6">     
-                            <b>Contraceptive Plan:</b> <br>{{user.profile.meta.contraceptive_plan}}
+                            <b>Contraceptive Plan:</b> <br>{{user['profile']['meta']['contraceptive_plan']}}
                         </div>
                     </div>
                 </div>
@@ -1027,6 +1031,7 @@
     export default {
         data() {
             return {
+                apiUrl: 'https://api.incharge.ga/api/v1',//'http://192.168.43.2/api/v1',
                 adminNames: '',
                 adminId: 0,
                 adminUserToken: '',
@@ -1039,6 +1044,7 @@
                 updateClinicReady: false,
                 adminVerifyAction: false,
                 adminAddAction: false,
+                userDetailReady: false,
                 users: [],
                 user: [],
                 clinics: [],
@@ -1109,15 +1115,13 @@
             };
         },
         mounted() {
-            M.AutoInit();
+            
+
             this.getAdminDetails();
             let checkToken = setInterval(() => {
                 if (this.adminId) {
                     clearInterval(checkToken);
 
-                    // let config = {
-                    //     headers: { Authorization: "Bearer " + this.adminUserToken }
-                    // };
                     this.getUsers();
                     this.getClinics();
                     this.getAlgo();
@@ -1139,7 +1143,7 @@
                 });
             },
             getUsers(){
-                axios.get("/api/v1/user/users").then(res => {
+                axios.get(this.apiUrl+"/user/users").then(res => {
                     this.users = res.data.data;
                     this.pagination.currentPage = res.data.current_page;
                     this.pagination.lastPage = res.data.last_page;
@@ -1172,7 +1176,7 @@
             },
             getClinics(){
                 // this.dataReady = true;
-                axios.get("/api/v1/user/clinics/getClinics").then(res => {
+                axios.get(this.apiUrl+"/user/clinics/getClinics").then(res => {
                     this.clinics = res.data.data;
                     this.clinicPagination.currentPage = res.data.current_page;
                     this.clinicPagination.lastPage = res.data.last_page;
@@ -1189,18 +1193,18 @@
                 });
             },
             getAlgo(){
-                axios.get("/api/v1/admin/algo").then(res => {
+                axios.get("/algo").then(res => {
                     this.algos = res.data;
                    
                 });
             },
             getEduLevel(){
-                axios.get("/api/v1/global/education-levels").then(res => {
+                axios.get(this.apiUrl+"/global/education-levels").then(res => {
                     this.eduLevel = res.data;
                 });
             },
             getContraReason(){
-                axios.get("/api/v1/global/contraception-reasons").then(res => {
+                axios.get(this.apiUrl+"/global/contraception-reasons").then(res => {
                     
                     this.contraceptiveReason = res.data;
                     this.dataReady = false;
@@ -1378,7 +1382,7 @@
                         verified: 'N'
                     }
                 }
-                axios.put("/admin/"+adminId, data).then(res => {
+                axios.put("/updateAdmin/"+adminId, data).then(res => {
                     if(res.status == 200){
                         M.toast({html: 'Admin verification action complete.'});
                     } else {
@@ -1388,7 +1392,7 @@
                 });
             },
             algoUpdateAPI(algoId, data){
-                axios.put("/api/v1/admin/algo/"+algoId, data).then(res => {
+                axios.put("/algo/"+algoId, data).then(res => {
                     if(res.status == 200){
                         this.algos.forEach((alg, i) => {
                             if(alg.id == res.data.id){
@@ -1408,7 +1412,7 @@
 
                 this.updateClinicReady = true;
 
-                axios.put("/api/v1/user/clinics/update/"+this.clinic.id, this.clinic).then(res => {
+                axios.put(this.apiUrl+"/user/clinics/update/"+this.clinic.id, this.clinic).then(res => {
                     if(res.status == 200){
                         location.reload();
                     } else {
@@ -1424,7 +1428,7 @@
                 };
                 this.addClinic.added_by_id = this.adminId;
                 axios
-                .post("/api/v1/user/clinics/addClinic", this.addClinic, config)
+                .post(this.apiUrl+"/user/clinics/addClinic", this.addClinic, config)
                 .then(res => {
                     
                     if (res.status == 201) {
@@ -1469,24 +1473,27 @@
             },
             getDeletedUsers(){
                 this.deletedUsersData = true;
-                axios.get("/api/v1/user/users/deletedUser").then(res => {
+                axios.get(this.apiUrl+"/user/users/deletedUser").then(res => {
                     this.deletedUsers = res.data;
                     this.deletedUsersData = false;
                 });
             },
             getDeletedClinics(){
                 this.deletedClinicsData = true;
-                axios.get("/api/v1/user/clinics/deletedClinics").then(res => {
+                axios.get(this.apiUrl+"/user/clinics/deletedClinics").then(res => {
                     this.deletedClinics = res.data;
                     this.deletedClinicsData = false;
                 });
             },
-            showUserDetails(id){
+            showUserDetails(id){                
                 this.user = [];
                 let user = this.users.filter(function(user) {
                     return user.id == id;
-                });
+                });                
                 this.user = user[0];
+                
+                this.userDetailReady = true;
+                $('#showUserModal').modal('open');
             },
             delUserDetails(id){
                 this.user = [];
@@ -1525,7 +1532,7 @@
             },
             deleteUser(id){
                 this.deleteUserReady = true;
-                axios.delete("/api/v1/user/users/deleteUser/"+id).then(res => {
+                axios.delete(this.apiUrl+"/user/users/deleteUser/"+id).then(res => {
                     if(res.status == 200){
                         location.reload();
                     } else {
@@ -1536,7 +1543,7 @@
             },
             deleteClinic(id){
                 this.deleteClinicReady = true;
-                axios.delete("/api/v1/user/clinics/deleteClinic/"+id).then(res => {
+                axios.delete(this.apiUrl+"/user/clinics/deleteClinic/"+id).then(res => {
                     if(res.status == 200){
                         location.reload();
                     } else {
@@ -1550,11 +1557,11 @@
                 let data = {
                     deleted_at: null
                 }
-                axios.put("/api/v1/user/users/update/"+id, data).then(res => {
+                axios.put(this.apiUrl+"/user/users/update/"+id, data).then(res => {
                     if(res.status == 200){
                         location.reload();
                     } else {
-                        M.toast({html: 'Clinic not restored.', classes: 'error'})
+                        M.toast({html: 'User not restored.', classes: 'error'})
                     }
                     this.updateUserReady = false;
                 });
@@ -1564,7 +1571,7 @@
                 let data = {
                     deleted_at: null
                 }
-                axios.put("/api/v1/user/clinics/revertDelete/"+id, data).then(res => {
+                axios.put(this.apiUrl+"/user/clinics/revertDelete/"+id, data).then(res => {
                     if(res.status == 200){
                         location.reload();
                     } else {
@@ -1642,7 +1649,7 @@
                 }
                 
                 axios
-                .post("/api/v1/admin/algo", this.addAlgo, config)
+                .post("/algo", this.addAlgo, config)
                 .then(res => {
                     
                     if (res.status == 201) {
