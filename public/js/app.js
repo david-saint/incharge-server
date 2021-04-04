@@ -2987,6 +2987,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      apiUrl: 'http://192.168.43.2/api/v1',
       adminNames: '',
       adminId: 0,
       adminUserToken: '',
@@ -3106,7 +3107,7 @@ __webpack_require__.r(__webpack_exports__);
     getUsers: function getUsers() {
       var _this3 = this;
 
-      axios.get("/getUsers").then(function (res) {
+      axios.get(this.apiUrl + "/user/users").then(function (res) {
         _this3.users = res.data.data;
         _this3.pagination.currentPage = res.data.current_page;
         _this3.pagination.lastPage = res.data.last_page;
@@ -3142,7 +3143,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this5 = this;
 
       // this.dataReady = true;
-      axios.get("/getClinics").then(function (res) {
+      axios.get(this.apiUrl + "/user/clinics/getClinics").then(function (res) {
         _this5.clinics = res.data.data;
         _this5.clinicPagination.currentPage = res.data.current_page;
         _this5.clinicPagination.lastPage = res.data.last_page;
@@ -3166,14 +3167,14 @@ __webpack_require__.r(__webpack_exports__);
     getEduLevel: function getEduLevel() {
       var _this7 = this;
 
-      axios.get("/education-levels").then(function (res) {
+      axios.get(this.apiUrl + "/global/education-levels").then(function (res) {
         _this7.eduLevel = res.data;
       });
     },
     getContraReason: function getContraReason() {
       var _this8 = this;
 
-      axios.get("/contraception-reasons").then(function (res) {
+      axios.get(this.apiUrl + "/global/contraception-reasons").then(function (res) {
         _this8.contraceptiveReason = res.data;
         _this8.dataReady = false;
       });
@@ -3397,7 +3398,7 @@ __webpack_require__.r(__webpack_exports__);
 
       e.preventDefault();
       this.updateClinicReady = true;
-      axios.put("/updateClinics/" + this.clinic.id, this.clinic).then(function (res) {
+      axios.put(this.apiUrl + "/user/clinics/update/" + this.clinic.id, this.clinic).then(function (res) {
         if (res.status == 200) {
           location.reload();
         } else {
@@ -3418,7 +3419,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       };
       this.addClinic.added_by_id = this.adminId;
-      axios.post("/addClinic", this.addClinic, config).then(function (res) {
+      axios.post(this.apiUrl + "/user/clinics/addClinic", this.addClinic, config).then(function (res) {
         if (res.status == 201) {
           location.reload();
         } else {
@@ -3474,7 +3475,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this15 = this;
 
       this.deletedUsersData = true;
-      axios.get("/deletedUser").then(function (res) {
+      axios.get(this.apiUrl + "/user/users/deletedUser").then(function (res) {
         _this15.deletedUsers = res.data;
         _this15.deletedUsersData = false;
       });
@@ -3483,7 +3484,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this16 = this;
 
       this.deletedClinicsData = true;
-      axios.get("/deletedClinics").then(function (res) {
+      axios.get(this.apiUrl + "/user/clinics/deletedClinics").then(function (res) {
         _this16.deletedClinics = res.data;
         _this16.deletedClinicsData = false;
       });
@@ -3534,7 +3535,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this17 = this;
 
       this.deleteUserReady = true;
-      axios["delete"]("/deleteUser/" + id).then(function (res) {
+      axios["delete"](this.apiUrl + "/user/users/deleteUser/" + id).then(function (res) {
         if (res.status == 200) {
           location.reload();
         } else {
@@ -3551,7 +3552,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this18 = this;
 
       this.deleteClinicReady = true;
-      axios["delete"]("/deleteClinic/" + id).then(function (res) {
+      axios["delete"](this.apiUrl + "/user/clinics/deleteClinic/" + id).then(function (res) {
         if (res.status == 200) {
           location.reload();
         } else {
@@ -3571,7 +3572,7 @@ __webpack_require__.r(__webpack_exports__);
       var data = {
         deleted_at: null
       };
-      axios.put("/revertDeletedUser/" + id, data).then(function (res) {
+      axios.put(this.apiUrl + "/user/users/update/" + id, data).then(function (res) {
         if (res.status == 200) {
           location.reload();
         } else {
@@ -3591,7 +3592,7 @@ __webpack_require__.r(__webpack_exports__);
       var data = {
         deleted_at: null
       };
-      axios.put("/revertDeletedClinic/" + id, data).then(function (res) {
+      axios.put(this.apiUrl + "/user/clinics/revertDelete/" + id, data).then(function (res) {
         if (res.status == 200) {
           location.reload();
         } else {

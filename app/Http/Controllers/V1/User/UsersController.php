@@ -12,7 +12,9 @@ use App\Http\Controllers\Controller;
  */
 class UsersController extends Controller
 {
-    
+    public function __construct() {
+        $this->middleware('isLoggedIn');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -39,7 +41,6 @@ class UsersController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::withTrashed()->find($id)->restore();
-        // $res = $user->update($request->only('deleted_at'));
         if($user){
             return response()->json('restored', 200);
         } else {
