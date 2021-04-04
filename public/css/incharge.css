@@ -106,7 +106,7 @@ footer {
 
 @media only screen and (max-width: 992px){
     nav .brand-logo {
-        width: 50vw;
+        width: 60vw;
     }
     #panelData {
         margin-top: 2vh;
@@ -117,5 +117,14 @@ footer {
     h2 small {
         font-size: 0.28em;
         line-height: 5;
+    }
+
+    .btn-flat i {
+        font-size: 1.1rem;
+        line-height: inherit;
+    }
+
+    i.left {
+        margin-right: 3px;
     }
 }

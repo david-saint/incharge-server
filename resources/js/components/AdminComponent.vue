@@ -184,10 +184,10 @@
                     <div class="row">
                         <div class="col l12 m12 s12 borderedUD">
                             <a href="#" data-target="showAddAlgoModal" class="blue-text waves-effect waves-light btn-flat modal-trigger" @click="showAddAlgoModal()">
-                                <i class="material-icons left">add</i>Add Algorithm
+                                <i class="material-icons left">add</i>Add Algo
                             </a>
                             <a href="#" data-target="showDeletedAlgoModal" class="blue-text waves-effect waves-light btn-flat modal-trigger right" @click="getDeletedAlgos()">
-                                <i class="material-icons left">refresh</i>Reactivate Algorithm
+                                <i class="material-icons left">refresh</i>Reactivate Algo
                             </a>
                         </div>
                         <div class="col l12 m12 s12">
