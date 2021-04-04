@@ -40130,7 +40130,7 @@ var render = function() {
                   _c("i", { staticClass: "material-icons left" }, [
                     _vm._v("add")
                   ]),
-                  _vm._v("Add Algorithm\n                        ")
+                  _vm._v("Add Algo\n                        ")
                 ]
               ),
               _vm._v(" "),
@@ -40150,7 +40150,7 @@ var render = function() {
                   _c("i", { staticClass: "material-icons left" }, [
                     _vm._v("refresh")
                   ]),
-                  _vm._v("Reactivate Algorithm\n                        ")
+                  _vm._v("Reactivate Algo\n                        ")
                 ]
               )
             ]),
