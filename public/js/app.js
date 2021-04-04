@@ -2987,7 +2987,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      apiUrl: 'http://192.168.43.2/api/v1',
+      apiUrl: 'https://api.incharge.ga/api/v1',
+      //'http://192.168.43.2/api/v1',
       adminNames: '',
       adminId: 0,
       adminUserToken: '',

@@ -1031,7 +1031,7 @@
     export default {
         data() {
             return {
-                apiUrl: 'http://192.168.43.2/api/v1',
+                apiUrl: 'https://api.incharge.ga/api/v1',//'http://192.168.43.2/api/v1',
                 adminNames: '',
                 adminId: 0,
                 adminUserToken: '',
