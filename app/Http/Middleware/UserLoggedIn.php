@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Closure;
 
-class IsLoggedIn
+class UserLoggedIn
 {
     /**
      * Handle an incoming request.
