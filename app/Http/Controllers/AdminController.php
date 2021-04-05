@@ -29,8 +29,7 @@ class AdminController extends Controller
         } else {
             return view('admin/regSuperUser');
         }
-    }
-    
+    }    
     public function getAdminDet(){
         return Auth()->user();
     }
@@ -62,7 +61,6 @@ class AdminController extends Controller
         }
         // echo $admin;
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -109,12 +107,10 @@ class AdminController extends Controller
         
         
     }
-
     public function allAdmins(){
         $admin = Admin::orderBy('verified', 'DESC')->paginate(50);
         return response()->json($admin, 200);
-    }
-    
+    }    
     public function logout(Request $request)
     {
         Auth::logout();
@@ -125,7 +121,6 @@ class AdminController extends Controller
 
         return redirect('/admin');
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -144,14 +139,115 @@ class AdminController extends Controller
         }   
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    // Controllers for User
+    public function allUsers()
     {
-        //
+        $users = User::with('profile', 'profile.educationLevel', 'profile.reason')->paginate(50);
+        return response()->json($users, 200);   
+    }
+    public function updateUser(Request $request, $id)
+    {
+        $user = User::withTrashed()->find($id)->restore();
+        if($user){
+            return response()->json('restored', 200);
+        } else {
+            return response()->json('not restored', 501);
+        }
+    }
+    public function deleteUser($id)
+    {
+        $user = User::findOrFail($id);
+        $res = $user->delete();
+        
+        if($res == 1){
+            return response()->json('Done', 200);
+        } else {
+            return response()->json('Not done', 501);
+        }
+    }
+    public function deletedUsers(){
+        $users = User::onlyTrashed()->get();
+        return response()->json($users, 200);  
+    }
+    public function revertDeletedUser($id)
+    {
+        $clinic = User::withTrashed()->find($id)->restore();
+        if($clinic){
+            return response()->json('restored', 200);
+        } else {
+            return response()->json('not restored', 501);
+        }
+    }
+    
+    // Controllers for Clinics
+    public function allClinics()
+    {
+        $clinics = Clinic::paginate(50);
+        return response()->json($clinics, 200);   
+    }
+    public function addClinic(Request $request)
+    {
+        $request->validate([
+            'name' => ['required','string'],
+            'address' => ['required','string'],
+            'latitude' => ['required','numeric'],
+            'longitude' => ['required','numeric'],
+            'added_by_id' => ['required','numeric']
+        ]);
+        
+        $clinic = Clinic::create($request->all());
+        if($clinic){
+            return response()->json('done', 201);
+        }
+    }
+    public function deletedClinics(){
+        $clinics = Clinic::onlyTrashed()->get();
+        return response()->json($clinics, 200);  
+    }
+    public function updateClinic(Request $request, $id)
+    {
+        $clinic = Clinic::findOrFail($id);
+        $res = $clinic->update($request->only('name', 'address', 'latitude', 'longitude', 'added_by_id'));
+        if($res){
+            return response()->json('Updated', 200);
+        } else {
+            return response()->json('Not Updated', 501);
+        }
+    }
+    public function revertDeletedClinic($id)
+    {
+        $clinic = Clinic::withTrashed()->find($id)->restore();
+        if($clinic){
+            return response()->json('restored', 200);
+        } else {
+            return response()->json('not restored', 501);
+        }
+    }
+    public function deleteClinic($id)
+    {
+        $user = Clinic::findOrFail($id);
+        $res = $user->delete();
+        
+        if($res == 1){
+            return response()->json('Done', 200);
+        } else {
+            return response()->json('Not done', 501);
+        }
+    }
+
+    // Controllers for Educational Levels
+    public function educationalLevels()
+	{
+		$el = EducationLevel::all();
+
+		return GenericNamedResource::collection($el);
+	}
+
+    // Controllers for Contraception Reason
+    public function contraceptionReason()
+    {
+        $cr = ContraceptionReason::all();
+
+        return ContraceptionReasonResource::collection($cr);
     }
 }
