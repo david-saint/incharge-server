@@ -3110,6 +3110,7 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get("/getUsers").then(function (res) {
         _this3.users = res.data.data;
+        console.log(_this3.users);
         _this3.pagination.currentPage = res.data.current_page;
         _this3.pagination.lastPage = res.data.last_page;
         _this3.pagination.firstPageUrl = res.data.first_page_url;
@@ -39664,13 +39665,35 @@ var render = function() {
                                   _vm._v(" "),
                                   _c("td", [_vm._v(_vm._s(user.name))]),
                                   _vm._v(" "),
-                                  _c("td", [_vm._v(_vm._s(user.profile.age))]),
-                                  _vm._v(" "),
                                   _c("td", [
-                                    _vm._v(_vm._s(user.profile.gender))
+                                    _vm._v(
+                                      _vm._s(
+                                        user.profile == null
+                                          ? "No Profile"
+                                          : user.profile.age
+                                      )
+                                    )
                                   ]),
                                   _vm._v(" "),
-                                  _c("td", [_vm._v(_vm._s(user.phone))]),
+                                  _c("td", [
+                                    _vm._v(
+                                      _vm._s(
+                                        user.profile == null
+                                          ? "No Profile"
+                                          : user.profile.gender
+                                      )
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _vm._v(
+                                      _vm._s(
+                                        user.profile == null
+                                          ? "No Profile"
+                                          : user.phone
+                                      )
+                                    )
+                                  ]),
                                   _vm._v(" "),
                                   _c("td", [
                                     _c(
@@ -40411,8 +40434,11 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user["profile"]["gender"]) +
-                      "\n                    "
+                    _vm._s(
+                      _vm.user.profile == null
+                        ? "No Profile"
+                        : _vm.user["profile"]["gender"]
+                    ) + "\n                    "
                   )
                 ]),
                 _vm._v(" "),
@@ -40421,8 +40447,11 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user["profile"]["age"]) +
-                      "\n                    "
+                    _vm._s(
+                      _vm.user.profile == null
+                        ? "No Profile"
+                        : _vm.user["profile"]["age"]
+                    ) + "\n                    "
                   )
                 ]),
                 _vm._v(" "),
@@ -40447,8 +40476,11 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user["profile"]["address"]) +
-                      "\n                    "
+                    _vm._s(
+                      _vm.user.profile == null
+                        ? "No Profile"
+                        : _vm.user["profile"]["address"]
+                    ) + "\n                    "
                   )
                 ]),
                 _vm._v(" "),
@@ -40457,8 +40489,11 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user["profile"]["education_level"]["name"]) +
-                      "\n                        \n                    "
+                    _vm._s(
+                      _vm.user.profile == null
+                        ? "No Profile"
+                        : _vm.user["profile"]["education_level"]["name"]
+                    ) + "\n                        \n                    "
                   )
                 ])
               ]),
@@ -40469,8 +40504,11 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user["profile"]["marital_status"]) +
-                      "\n                    "
+                    _vm._s(
+                      _vm.user.profile == null
+                        ? "No Profile"
+                        : _vm.user["profile"]["marital_status"]
+                    ) + "\n                    "
                   )
                 ]),
                 _vm._v(" "),
@@ -40479,8 +40517,11 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user["profile"]["sexually_active"]) +
-                      "\n                    "
+                    _vm._s(
+                      _vm.user.profile == null
+                        ? "No Profile"
+                        : _vm.user["profile"]["sexually_active"]
+                    ) + "\n                    "
                   )
                 ]),
                 _vm._v(" "),
@@ -40489,8 +40530,11 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user["profile"]["height"]) +
-                      "\n                    "
+                    _vm._s(
+                      _vm.user.profile == null
+                        ? "No Profile"
+                        : _vm.user["profile"]["height"]
+                    ) + "\n                    "
                   )
                 ]),
                 _vm._v(" "),
@@ -40499,8 +40543,11 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user["profile"]["weight"]) +
-                      "\n                    "
+                    _vm._s(
+                      _vm.user.profile == null
+                        ? "No Profile"
+                        : _vm.user["profile"]["weight"]
+                    ) + "\n                    "
                   )
                 ])
               ]),
@@ -40511,8 +40558,11 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user["profile"]["religion"]) +
-                      "\n                    "
+                    _vm._s(
+                      _vm.user.profile == null
+                        ? "No Profile"
+                        : _vm.user["profile"]["religion"]
+                    ) + "\n                    "
                   )
                 ]),
                 _vm._v(" "),
@@ -40521,8 +40571,11 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user["profile"]["religion_sect"]) +
-                      "\n                    "
+                    _vm._s(
+                      _vm.user.profile == null
+                        ? "No Profile"
+                        : _vm.user["profile"]["religion_sect"]
+                    ) + "\n                    "
                   )
                 ]),
                 _vm._v(" "),
@@ -40531,8 +40584,11 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user["profile"]["number_of_children"]) +
-                      "\n                    "
+                    _vm._s(
+                      _vm.user.profile == null
+                        ? "No Profile"
+                        : _vm.user["profile"]["number_of_children"]
+                    ) + "\n                    "
                   )
                 ]),
                 _vm._v(" "),
@@ -40541,8 +40597,11 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user["profile"]["occupation"]) +
-                      "\n                    "
+                    _vm._s(
+                      _vm.user.profile == null
+                        ? "No Profile"
+                        : _vm.user["profile"]["occupation"]
+                    ) + "\n                    "
                   )
                 ])
               ]),
@@ -40553,8 +40612,11 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user["profile"]["pregnancy_status"]) +
-                      "\n                    "
+                    _vm._s(
+                      _vm.user.profile == null
+                        ? "No Profile"
+                        : _vm.user["profile"]["pregnancy_status"]
+                    ) + "\n                    "
                   )
                 ]),
                 _vm._v(" "),
@@ -40563,8 +40625,11 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(
-                    _vm._s(_vm.user["profile"]["meta"]["contraceptive_plan"]) +
-                      "\n                    "
+                    _vm._s(
+                      _vm.user.profile == null
+                        ? "No Profile"
+                        : _vm.user["profile"]["meta"]["contraceptive_plan"]
+                    ) + "\n                    "
                   )
                 ])
               ])
