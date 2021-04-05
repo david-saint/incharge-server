@@ -3110,7 +3110,6 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get("/getUsers").then(function (res) {
         _this3.users = res.data.data;
-        console.log(_this3.users);
         _this3.pagination.currentPage = res.data.current_page;
         _this3.pagination.lastPage = res.data.last_page;
         _this3.pagination.firstPageUrl = res.data.first_page_url;
@@ -39806,8 +39805,11 @@ var render = function() {
                           "a",
                           {
                             key: index,
-                            staticClass:
-                              "waves-effect waves-light btn-small btn-flat",
+                            staticClass: "waves-effect waves-light btn-small",
+                            class: {
+                              btn: index == _vm.pagination.currentPage,
+                              "btn-flat": index != _vm.pagination.currentPage
+                            },
                             on: {
                               click: function($event) {
                                 return _vm.getPageData(index)
@@ -40068,8 +40070,11 @@ var render = function() {
                     "a",
                     {
                       key: index,
-                      staticClass:
-                        "waves-effect waves-light btn-small btn-flat",
+                      staticClass: "waves-effect waves-light btn-small",
+                      class: {
+                        btn: index == _vm.clinicPagination.currentPage,
+                        "btn-flat": index != _vm.clinicPagination.currentPage
+                      },
                       on: {
                         click: function($event) {
                           return _vm.getClinicPageData(index)

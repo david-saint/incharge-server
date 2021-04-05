@@ -93,7 +93,7 @@
                                     <a class="waves-effect waves-light btn-small purple darken-3" @click="getPageData(pagination.currentPage - 1)">Prev</a>
                                 </span>
                                 
-                                <a class="waves-effect waves-light btn-small btn-flat" @click="getPageData(index)" v-for="index in pagination.lastPage" :key="index">{{index}}</a>
+                                <a class="waves-effect waves-light btn-small" v-bind:class="{ btn: index == pagination.currentPage, 'btn-flat': index != pagination.currentPage }" @click="getPageData(index)" v-for="index in pagination.lastPage" :key="index">{{index}}</a>
 
                                 <span v-if="pagination.currentPage == pagination.lastPage">
                                 
@@ -165,7 +165,7 @@
                                 <a class="waves-effect waves-light btn-small purple darken-3" @click="getClinicPageData(clinicPagination.currentPage - 1)">Prev</a>
                             </span>
                             
-                            <a class="waves-effect waves-light btn-small btn-flat" @click="getClinicPageData(index)" v-for="index in clinicPagination.lastPage" :key="index">{{index}}</a>
+                            <a class="waves-effect waves-light btn-small" v-bind:class="{ btn: index == clinicPagination.currentPage, 'btn-flat': index != clinicPagination.currentPage }" @click="getClinicPageData(index)" v-for="index in clinicPagination.lastPage" :key="index">{{index}}</a>
 
                             <span v-if="clinicPagination.currentPage == clinicPagination.lastPage">
                                 <!-- <a class="waves-effect waves-light btn-small purple darken-3" disabled>Next</a> -->
@@ -1145,7 +1145,6 @@
             getUsers(){
                 axios.get("/getUsers").then(res => {
                     this.users = res.data.data;
-                    console.log(this.users);
                     this.pagination.currentPage = res.data.current_page;
                     this.pagination.lastPage = res.data.last_page;
                     this.pagination.firstPageUrl = res.data.first_page_url;
