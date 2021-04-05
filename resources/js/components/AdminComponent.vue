@@ -1143,7 +1143,7 @@
                 });
             },
             getUsers(){
-                axios.get(this.apiUrl+"/user/users").then(res => {
+                axios.get("/getUsers").then(res => {
                     this.users = res.data.data;
                     this.pagination.currentPage = res.data.current_page;
                     this.pagination.lastPage = res.data.last_page;
@@ -1176,7 +1176,7 @@
             },
             getClinics(){
                 // this.dataReady = true;
-                axios.get(this.apiUrl+"/user/clinics/getClinics").then(res => {
+                axios.get("/getClinics").then(res => {
                     this.clinics = res.data.data;
                     this.clinicPagination.currentPage = res.data.current_page;
                     this.clinicPagination.lastPage = res.data.last_page;
@@ -1199,12 +1199,12 @@
                 });
             },
             getEduLevel(){
-                axios.get(this.apiUrl+"/global/education-levels").then(res => {
+                axios.get("/getEducationalLevels").then(res => {
                     this.eduLevel = res.data;
                 });
             },
             getContraReason(){
-                axios.get(this.apiUrl+"/global/contraception-reasons").then(res => {
+                axios.get("/getContraceptionReason").then(res => {
                     
                     this.contraceptiveReason = res.data;
                     this.dataReady = false;
@@ -1412,7 +1412,7 @@
 
                 this.updateClinicReady = true;
 
-                axios.put(this.apiUrl+"/user/clinics/update/"+this.clinic.id, this.clinic).then(res => {
+                axios.put("/updateClinic/"+this.clinic.id, this.clinic).then(res => {
                     if(res.status == 200){
                         location.reload();
                     } else {
@@ -1428,7 +1428,7 @@
                 };
                 this.addClinic.added_by_id = this.adminId;
                 axios
-                .post(this.apiUrl+"/user/clinics/addClinic", this.addClinic, config)
+                .post("/addClinic", this.addClinic, config)
                 .then(res => {
                     
                     if (res.status == 201) {
@@ -1473,14 +1473,14 @@
             },
             getDeletedUsers(){
                 this.deletedUsersData = true;
-                axios.get(this.apiUrl+"/user/users/deletedUser").then(res => {
+                axios.get("/getDeletedUsers").then(res => {
                     this.deletedUsers = res.data;
                     this.deletedUsersData = false;
                 });
             },
             getDeletedClinics(){
                 this.deletedClinicsData = true;
-                axios.get(this.apiUrl+"/user/clinics/deletedClinics").then(res => {
+                axios.get("/getDeletedClinics").then(res => {
                     this.deletedClinics = res.data;
                     this.deletedClinicsData = false;
                 });
@@ -1532,7 +1532,7 @@
             },
             deleteUser(id){
                 this.deleteUserReady = true;
-                axios.delete(this.apiUrl+"/user/users/deleteUser/"+id).then(res => {
+                axios.delete("/deleteUser/"+id).then(res => {
                     if(res.status == 200){
                         location.reload();
                     } else {
@@ -1543,7 +1543,7 @@
             },
             deleteClinic(id){
                 this.deleteClinicReady = true;
-                axios.delete(this.apiUrl+"/user/clinics/deleteClinic/"+id).then(res => {
+                axios.delete("/deleteClinic/"+id).then(res => {
                     if(res.status == 200){
                         location.reload();
                     } else {
@@ -1557,7 +1557,7 @@
                 let data = {
                     deleted_at: null
                 }
-                axios.put(this.apiUrl+"/user/users/update/"+id, data).then(res => {
+                axios.put("/updateUser/"+id, data).then(res => {
                     if(res.status == 200){
                         location.reload();
                     } else {
@@ -1571,7 +1571,7 @@
                 let data = {
                     deleted_at: null
                 }
-                axios.put(this.apiUrl+"/user/clinics/revertDelete/"+id, data).then(res => {
+                axios.put("/revertDeletedClinic/"+id, data).then(res => {
                     if(res.status == 200){
                         location.reload();
                     } else {

@@ -34,3 +34,23 @@ Route::put('updateAdmin/{admin_id}', 'AdminController@update');
 // Routes for managing Algorithm on the admin panel
 Route::resource('/algo', 'AlgorithmController');
 
+//Routes for managing users
+Route::get('/getUsers', 'AdminController@allUsers');
+Route::put('updateUser/{user_id}', 'AdminController@updateUser');
+Route::delete('deleteUser/{user_id}', 'AdminController@deleteUser');
+Route::get('/getDeletedUsers', 'AdminController@deletedUsers');
+Route::put('revertDeletedUser/{user_id}', 'AdminController@revertDeletedUser');
+
+//Routes for managing clinics
+Route::get('/getClinics', 'AdminController@allClinics');
+Route::post('addClinic', 'AdminController@addClinic');
+Route::put('updateClinic/{clinic_id}', 'AdminController@updateClinic');
+Route::delete('deleteClinic/{user_id}', 'AdminController@deleteClinic');
+Route::get('/getDeletedClinics', 'AdminController@deletedClinics');
+Route::put('revertDeletedClinic/{clinic_id}', 'AdminController@revertDeletedClinic');
+
+//Routes for managing Contraception Reason
+Route::get('/getContraceptionReason', 'AdminController@contraceptionReason');
+
+//Routes for managing Educational Levels
+Route::get('/getEducationalLevels', 'AdminController@educationalLevels');

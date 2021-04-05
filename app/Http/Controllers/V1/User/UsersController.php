@@ -13,7 +13,7 @@ use App\Http\Controllers\Controller;
 class UsersController extends Controller
 {
     public function __construct() {
-        $this->middleware('isLoggedIn');
+        $this->middleware('isLogged');
     }
     /**
      * Display a listing of the resource.
