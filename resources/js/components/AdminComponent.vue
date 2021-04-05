@@ -69,9 +69,9 @@
                                         <tr v-else v-for="(user, index) in users" :key="user.id">
                                             <td>{{index + 1}}</td>
                                             <td>{{user.name}}</td>
-                                            <td>{{user.profile.age}}</td>
-                                            <td>{{user.profile.gender}}</td>
-                                            <td>{{user.phone}}</td>
+                                            <td>{{user.profile == null ? 'No Profile' : user.profile.age}}</td>
+                                            <td>{{user.profile == null ? 'No Profile' : user.profile.gender}}</td>
+                                            <td>{{user.profile == null ? 'No Profile' : user.phone}}</td>
                                             <td>
                                                 <a href="#" @click="showUserDetails(user.id, $event)"><i class="material-icons">visibility</i></a>
                                                 
@@ -320,10 +320,10 @@
                     <h4>{{user.name}}</h4>
                     <div class="row">
                         <div class="col l3 m6 s6">
-                            <b>Gender:</b> <br>{{user['profile']['gender']}}
+                            <b>Gender:</b> <br>{{user.profile == null ? 'No Profile' : user['profile']['gender']}}
                         </div>
                         <div class="col l3 m6 s6">
-                            <b>Age:</b> <br>{{user['profile']['age']}}
+                            <b>Age:</b> <br>{{user.profile == null ? 'No Profile' : user['profile']['age']}}
                         </div>
                         <div class="col l3 m6 s6">
                             <b>Phone:</b> <br>{{user.phone}}
@@ -334,47 +334,47 @@
                     </div>
                     <div class="row">
                         <div class="col l6 m6 s6">
-                            <b>Address:</b> <br>{{user['profile']['address']}}
+                            <b>Address:</b> <br>{{user.profile == null ? 'No Profile' : user['profile']['address']}}
                         </div>
                         <div class="col l6 m6 s6">
-                            <b>Educational Level:</b> <br>{{user['profile']['education_level']['name']}}
+                            <b>Educational Level:</b> <br>{{user.profile == null ? 'No Profile' : user['profile']['education_level']['name']}}
                             
                         </div>
                     </div>
                      <div class="row">
                         <div class="col l3 m6 s6">
-                            <b>Marital:</b> <br>{{user['profile']['marital_status']}}
+                            <b>Marital:</b> <br>{{user.profile == null ? 'No Profile' : user['profile']['marital_status']}}
                         </div>
                         <div class="col l3 m6 s6">
-                            <b>Sexual:</b> <br>{{user['profile']['sexually_active']}}
+                            <b>Sexual:</b> <br>{{user.profile == null ? 'No Profile' : user['profile']['sexually_active']}}
                         </div>
                         <div class="col l3 m6 s6">
-                            <b>Height:</b> <br>{{user['profile']['height']}}
+                            <b>Height:</b> <br>{{user.profile == null ? 'No Profile' : user['profile']['height']}}
                         </div>
                         <div class="col l3 m6 s6">
-                            <b>Weight:</b> <br>{{user['profile']['weight']}}
+                            <b>Weight:</b> <br>{{user.profile == null ? 'No Profile' : user['profile']['weight']}}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col l3 m6 s6">
-                            <b>Religion:</b> <br>{{user['profile']['religion']}}
+                            <b>Religion:</b> <br>{{user.profile == null ? 'No Profile' : user['profile']['religion']}}
                         </div>
                         <div class="col l3 m6 s6">
-                            <b>Sect:</b> <br>{{user['profile']['religion_sect']}}
+                            <b>Sect:</b> <br>{{user.profile == null ? 'No Profile' : user['profile']['religion_sect']}}
                         </div>
                         <div class="col l3 m6 s6">
-                            <b>Children:</b> <br>{{user['profile']['number_of_children']}}
+                            <b>Children:</b> <br>{{user.profile == null ? 'No Profile' : user['profile']['number_of_children']}}
                         </div>
                         <div class="col l3 m6 s6">
-                            <b>Occupation:</b> <br>{{user['profile']['occupation']}}
+                            <b>Occupation:</b> <br>{{user.profile == null ? 'No Profile' : user['profile']['occupation']}}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col l4 m6 s6">
-                            <b>Pregnant:</b> <br>{{user['profile']['pregnancy_status']}}
+                            <b>Pregnant:</b> <br>{{user.profile == null ? 'No Profile' : user['profile']['pregnancy_status']}}
                         </div>
                         <div class="col l4 m6 s6">     
-                            <b>Contraceptive Plan:</b> <br>{{user['profile']['meta']['contraceptive_plan']}}
+                            <b>Contraceptive Plan:</b> <br>{{user.profile == null ? 'No Profile' : user['profile']['meta']['contraceptive_plan']}}
                         </div>
                     </div>
                 </div>
@@ -1145,6 +1145,7 @@
             getUsers(){
                 axios.get("/getUsers").then(res => {
                     this.users = res.data.data;
+                    console.log(this.users);
                     this.pagination.currentPage = res.data.current_page;
                     this.pagination.lastPage = res.data.last_page;
                     this.pagination.firstPageUrl = res.data.first_page_url;
