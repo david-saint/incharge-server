@@ -217,7 +217,7 @@
                                     <tr v-else v-for="alg in algos" :key="alg.id">
                                         <td>{{alg.id}}</td>
                                         <td>
-                                            <label v-if="alg.active == 'true'">
+                                            <label v-if="alg.active == 'Y'">
                                                 <input type="checkbox" checked @change="toggleActive(alg.id, $event)"/>
                                                 <span></span>
                                             </label>
@@ -1361,11 +1361,11 @@
                 let data;
                 if(e.target.checked){
                     data = {
-                        active: 'true'
+                        active: 'Y'
                     }
                 } else {
                     data = {
-                        active: 'false'
+                        active: 'N'
                     }
                 }
                 this.algoUpdateAPI(algoId, data);
