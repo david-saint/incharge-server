@@ -27,7 +27,7 @@
                 </form>
             </div>
             <footer class="row center-align">
-                <small>$copy Copyright. InCharge</small>
+                <small>&copy; Copyright. InCharge</small>
             </footer>
         </div>
         
