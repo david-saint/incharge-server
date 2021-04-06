@@ -38,7 +38,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             1 => 
             array (
@@ -65,7 +65,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             2 => 
             array (
@@ -92,7 +92,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             3 =>
             array (
@@ -119,7 +119,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true',
+                'active' => 'Y',
             ),
             4 => 
             array (
@@ -146,7 +146,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             5 => 
             array (
@@ -173,7 +173,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             6 => 
             array (
@@ -200,7 +200,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             7 => 
             array (
@@ -227,7 +227,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             8 => 
             array (
@@ -254,7 +254,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             9 => 
             array (
@@ -281,7 +281,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             10 => 
             array (
@@ -308,7 +308,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             11 => 
             array (
@@ -335,7 +335,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             12 => 
             array (
@@ -362,7 +362,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             13 => 
             array (
@@ -389,7 +389,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             14 => 
             array (
@@ -416,7 +416,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             15 => 
             array (
@@ -443,7 +443,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             16 => 
             array (
@@ -470,7 +470,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             17 => 
             array (
@@ -497,7 +497,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             18 => 
             array (
@@ -524,7 +524,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             19 => 
             array (
@@ -551,7 +551,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             20 => 
             array (
@@ -578,7 +578,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             21 => 
             array (
@@ -605,7 +605,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => 'negative',
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             22 => 
             array (
@@ -632,7 +632,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => 'negative',
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             23 => 
             array (
@@ -659,7 +659,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             24 => 
             array (
@@ -686,7 +686,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => 'PROGESTOGEN_ONLY',
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             25 =>
             array (
@@ -713,7 +713,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             26 => 
             array (
@@ -740,7 +740,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             27 => 
             array (
@@ -767,7 +767,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             28 => 
             array (
@@ -794,7 +794,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => NULL,
                 'tempPlanDirP' => NULL,
-                'active' => 'true'
+                'active' => 'Y'
             ),
             29 => 
             array (
@@ -821,7 +821,7 @@ class AlgorithmSeeder extends Seeder
                 'progestogenPossibleDir' => NULL,
                 'tempPlanDirN' => 'COMBINED_PATCHES',
                 'tempPlanDirP' => 'COMBINED_ORAL',
-                'active' => 'true'
+                'active' => 'Y'
             ),
         ));
     }
