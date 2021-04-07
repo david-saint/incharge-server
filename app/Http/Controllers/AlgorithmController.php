@@ -25,7 +25,7 @@ class AlgorithmController extends Controller
 
     public function algoJSON()
     {
-        $algo = Algorithm::where('active', '=', 'true')->get();
+        $algo = Algorithm::where('active', '=', 'Y')->get();
         return $algo;
     }
 

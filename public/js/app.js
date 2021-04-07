@@ -3333,11 +3333,11 @@ __webpack_require__.r(__webpack_exports__);
 
       if (e.target.checked) {
         data = {
-          active: 'true'
+          active: 'Y'
         };
       } else {
         data = {
-          active: 'false'
+          active: 'N'
         };
       }
 
@@ -40197,7 +40197,7 @@ var render = function() {
                             _c("td", [_vm._v(_vm._s(alg.id))]),
                             _vm._v(" "),
                             _c("td", [
-                              alg.active == "true"
+                              alg.active == "Y"
                                 ? _c("label", [
                                     _c("input", {
                                       attrs: { type: "checkbox", checked: "" },
