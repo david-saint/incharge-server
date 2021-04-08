@@ -10,7 +10,9 @@ use App\Http\Controllers\Controller;
 class AlgorithmController extends Controller
 {
     public function __construct() {
-        $this->middleware('isAdmin');
+        $this->middleware('isAdmin', ['except' => [
+            'index'
+        ]]);
     }
     /**
      * Display a listing of the resource.
@@ -19,7 +21,7 @@ class AlgorithmController extends Controller
      */
     public function index()
     {
-        $algo = Algorithm::orderBy('active', 'ASC')->get();
+        $algo = Algorithm::orderBy('active', 'ASC')->orderBy('id', 'ASC')->get();
         return response()->json($algo, 200);
     }
 
