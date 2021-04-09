@@ -40,8 +40,10 @@ class ClinicController extends SearchableController
     	$this->allowedRelationships = [
     		'locations',
     	];
-
-        $this->middleware('isLoggedIn');
+        
+        $this->middleware('isLogged', ['except' => [
+            'index'
+        ]]);
     }
 
     /**
