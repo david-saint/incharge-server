@@ -41,7 +41,7 @@ class ClinicController extends SearchableController
     		'locations',
     	];
 
-        $this->middleware('isLoggedIn');
+        $this->middleware('isLogged');
     }
 
     /**
